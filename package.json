@@ -1,0 +1,27 @@
+{
+  "name": "@ons/static-website-generator",
+  "version": "1.0.0",
+  "repository": "https://github.com/ONSdigital/static-website-generator.git",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "ONS Digital"
+  },
+  "bin": {
+    "generate-website": "bin/generate-website.js"
+  },
+  "scripts": {},
+  "dependencies": {
+    "front-matter": "^4.0.2",
+    "fs-extra": "^10.1.0",
+    "graphql": "^15.5.0",
+    "graphql-request": "^3.4.0",
+    "marked": "^4.0.17",
+    "moment": "^2.29.3",
+    "nunjucks": "^3.2.3"
+  },
+  "peerDependencies": {
+    "@ons/design-system": "x"
+  }
+}
