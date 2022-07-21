@@ -21,8 +21,8 @@ fi
 # Verify that the user is authenticated with GitHub before proceeding.
 gh auth status
 
-echo "Pulling latest content from the 'develop' branch..."
-git checkout develop
+echo "Pulling latest content from the 'main' branch..."
+git checkout main
 git pull
 
 echo "Creating branch for new release..."
@@ -34,12 +34,8 @@ sed -i "" -E "s/\"version\": \"$VERSION_PATTERN\",/\"version\": \"$1\",/g" packa
 git add README.md package.json
 git commit -m "Bump to version $1."
 
-echo "Creating release tag v$1..."
-git tag v$1
-
-echo "Pushing new branch release/v$1..."
-git push --set-upstream origin release/v$1
-git push --tags
+echo "Pushing release branch..."
+git push -u origin release/v$1
 
 echo "Creating a pull request..."
-gh pr create --title "Release v$1" --body "" --base develop --head release/v$1
+gh pr create --title "Release v$1" --body "" --base main --head release/v$1
