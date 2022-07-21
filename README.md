@@ -57,3 +57,14 @@ The following is recommended for CraftCMS sources:
 - [CraftCMS GraphQL queries](./docs/craftcms-graphql-queries.md)
 - [Templating](./docs/templating.md)
 - [Creating a custom content source](./docs/creating-a-custom-content-source.md)
+
+
+## Releasing a new version of this generator
+
+> GitHub's `gh` command is needed in order to use the `create-release` command (see [Take GitHub to the command line](https://cli.github.com/)).
+
+1. Ensure that your local working directory is clear.
+2. Run the command `yarn create-release {x.y.z}` with the new release number in place of `{x.y.z}`.
+    > This bumps the package release number and creates a PR for the release.
+3. Review and merge the release PR.
+4. [Create a release version](https://github.com/ONSdigital/static-website-generator/releases/new). Specify a version number tag (eg. v1.0.0), use the version number (eg. 1.0.0) for the release title, and summarise the release.
