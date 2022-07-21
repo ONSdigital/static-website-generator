@@ -42,4 +42,4 @@ git push --set-upstream origin release/v$1
 git push --tags
 
 echo "Creating a pull request..."
-gh pr create --title "Release v$1" --body "" --base develop --head release/v$1
+gh pr create --title "Release v$1" --body "" --base main --head release/v$1
