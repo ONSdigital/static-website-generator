@@ -15,7 +15,7 @@ export default function itemsList_from_navigationItemsFilter(navigationItems) {
           title: item.targetEntry?.navigationTitle,
           url: item.targetEntry?.url,
           ariaLabel: item.targetEntry?.navigationTitle !== item.targetEntry?.title
-            ? item.targetEntry?.title
+            ? (item.targetEntry?.title ?? null)
             : null,
         };
       }
