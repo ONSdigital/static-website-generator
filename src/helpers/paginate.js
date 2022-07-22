@@ -18,6 +18,10 @@ export default function paginate(page) {
       ...page,
 
       id: (!!page.id?.replace) ? page.id.replace("%PAGE_INDEX%", pageIndex) : page.id,
+      uri: page.uri + paginatedPath,
+      url: page.url + paginatedPath,
+      absoluteUrl: page.absoluteUrl + paginatedPath,
+
       pagination: {
         ...pagination,
         currentIndex: pageIndex,
@@ -26,10 +30,8 @@ export default function paginate(page) {
           current: index === pageIndex,
         })),
       },
+
       [pagination.dataAlias ?? "data"]: pageData,
-      uri: page.uri + paginatedPath,
-      url: page.url + paginatedPath,
-      absoluteUrl: page.absoluteUrl + paginatedPath,
     };
   });
 }
