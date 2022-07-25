@@ -1,5 +1,4 @@
 import fs from "fs-extra";
-import { GraphQLClient } from "graphql-request";
 
 import * as logger from "../../helpers/logger.js";
 import transformBuildIndexes from "./transformBuildIndexes.js";
@@ -7,7 +6,6 @@ import transformLinkRefs from "./transformLinkRefs.js";
 import transformPullOneFromArray from "./transformPullOneFromArray.js";
 
 const defaultOptions = {
-  createPagesForEntryTypes: [],
 };
 
 export default class CmsSource {
@@ -18,21 +16,21 @@ export default class CmsSource {
   get name() { return "cms"; }
 
   async fetchData(site) {
-    if (this.options.createPagesForEntryTypes.length === 0) {
-      return null;
-    }
-
     try {
       logger.stage(`Craft CMS: Fetching data for ${site.name}...`);
-      const client = await createGraphQLClient(this.options.graphQL);
-      const queryGraphQL = fs.readFileSync(this.options.graphQL.queryFilePath, { encoding: "utf8" });
+
+      const { createClient, endpoint, headers } = this.options.graphQL;
+      logger.step(`Connecting to GraphQL endpoint '${endpoint}'...`);
+      const client = createClient(endpoint, { headers });
+
+      const { queryFilePath } = this.options.graphQL;
+      logger.step(`Loading GraphQL query '${queryFilePath}'...`);
+      const queryGraphQL = fs.readFileSync(queryFilePath, { encoding: "utf8" });
+
+      logger.step(`Requesting data...`);
       const cmsData = await client.request(queryGraphQL, {
         site: site.name,
       });
-  
-      for (let entry of cmsData.entries) {
-        entry.handle = `${entry.sectionHandle}/${entry.typeHandle}`;
-      }
 
       transformPullOneFromArray(cmsData);
       transformBuildIndexes(cmsData);
@@ -51,13 +49,8 @@ export default class CmsSource {
   }
 
   createPages(site, data) {
-    return data.entries.filter(entry => this.options.createPagesForEntryTypes.includes(entry.handle));
+    return [];
   }
-}
-
-async function createGraphQLClient({ endpoint, headers }) {
-  logger.stage(`Craft CMS: Connecting to GraphQL endpoint '${endpoint}'...`);
-  return new GraphQLClient(endpoint, { headers });
 }
 
 function formatGraphQLErrorMessage(ex) {
