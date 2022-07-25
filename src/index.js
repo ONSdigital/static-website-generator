@@ -11,6 +11,7 @@ export default class Generator {
     this.siteNames = this.sites.map(site => site.name);
     this.sitesByName = Object.fromEntries(this.sites.map(site => ([ site.name, site ])));
     this.stringsByLanguage = options.stringsByLanguage;
+    this.defaultTemplatesPath = options.defaultTemplatesPath;
   }
 
   async generate(outputPath) {
@@ -41,7 +42,8 @@ export default class Generator {
   
       for (let processedSite of Object.values(processedSites)) {
         logger.stage(`Rendering and writing pages for site "${processedSite.name}"...`);
-        const renderer = await createRenderer(processedSite.data, processedSite.hooks?.setupNunjucks);
+        const templatesPath = processedSite.templatesPath ?? this.defaultTemplatesPath;
+        const renderer = await createRenderer(templatesPath, processedSite.data, processedSite.hooks?.setupNunjucks);
         await renderSitePages(`${outputPath}/${processedSite.name}`, processedSite, renderer);
       }
     }

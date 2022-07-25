@@ -7,19 +7,17 @@ import localizeFilter from "./filters/localizeFilter.js";
 import setPropertyFilter from "./filters/setPropertyFilter.js";
 import uniqueIdFilter from "./filters/uniqueIdFilter.js";
 
-const cwd = process.cwd();
-const templatesPath = `${cwd}/templates`;
-
-const designSystemPath = `${cwd}/node_modules/@ons/design-system`;
+const designSystemPath = `${ process.cwd() }/node_modules/@ons/design-system`;
 const designSystemVersion = fs.readJsonSync(`${designSystemPath}/package.json`).version;
-const searchPaths = [ templatesPath, `${designSystemPath}` ];
 
 nunjucks.configure(null, {
   watch: false,
   autoescape: true
 });
 
-export default async function createRenderer(data, setupNunjucks = null) {
+export default async function createRenderer(templatesPath, data, setupNunjucks = null) {
+  const searchPaths = [ templatesPath, `${designSystemPath}` ];
+
   const nunjucksLoader = new nunjucks.FileSystemLoader(searchPaths);
   const nunjucksEnvironment = new nunjucks.Environment(nunjucksLoader);
 

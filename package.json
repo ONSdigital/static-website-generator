@@ -27,6 +27,7 @@
     "@ons/design-system": "x"
   },
   "devDependencies": {
+    "@ons/design-system": "^53.1.0",
     "jest": "^28.1.3"
   }
 }
