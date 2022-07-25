@@ -2,7 +2,7 @@
 
 import path from "path";
 
-import Generator from "../src/index.js";
+import Generator from "../src/Generator.js";
 import loadStringsSync from "../src/helpers/loadStringsSync.js";
 
 const PROJECT_PATH = process.cwd();
