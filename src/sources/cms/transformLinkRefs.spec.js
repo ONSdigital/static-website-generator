@@ -1,0 +1,77 @@
+import transformBuildIndexes from "./transformBuildIndexes.js";
+import transformLinkRefs from "./transformLinkRefs.js";
+
+const EXAMPLE_SOURCE_DATA = {
+  entries: [
+    {
+      id: 24,
+      title: "Example entry",
+      entry: { _entryRef: 72 },
+      categories: [
+        { _categoryRef: 2 },
+        { _categoryRef: 4 },
+      ],
+      asset: { _assetRef: 4 },
+    },
+    {
+      id: 72,
+      title: "Another example entry",
+      entry: { _entryRef: 24 },
+      categories: [
+        { _categoryRef: 4 },
+      ],
+      asset: { _assetRef: 4 },
+    },
+  ],
+
+  categories: [
+    {
+      id: 2,
+      title: "Example category A",
+    },
+    {
+      id: 4,
+      title: "Example category B",
+    },
+  ],
+
+  assets: [
+    {
+      id: 4,
+      title: "Example asset",
+    },
+  ]
+};
+
+describe("transformLinkRefs(sourceData)", () => {
+  it("replaces entry reference identifiers with actual entry reference", () => {
+    const sourceData = { ...EXAMPLE_SOURCE_DATA };
+    transformBuildIndexes(sourceData);
+
+    transformLinkRefs(sourceData);
+
+    expect(sourceData.entries[0].entry).toBe(sourceData.entries[1]);
+    expect(sourceData.entries[1].entry).toBe(sourceData.entries[0]);
+  });
+
+  it("replaces category reference identifiers with actual category reference", () => {
+    const sourceData = { ...EXAMPLE_SOURCE_DATA };
+    transformBuildIndexes(sourceData);
+
+    transformLinkRefs(sourceData);
+
+    expect(sourceData.entries[0].categories[0]).toBe(sourceData.categories[0]);
+    expect(sourceData.entries[0].categories[1]).toBe(sourceData.categories[1]);
+    expect(sourceData.entries[1].categories[0]).toBe(sourceData.categories[1]);
+  });
+
+  it("replaces asset reference identifiers with actual asset reference", () => {
+    const sourceData = { ...EXAMPLE_SOURCE_DATA };
+    transformBuildIndexes(sourceData);
+
+    transformLinkRefs(sourceData);
+
+    expect(sourceData.entries[0].asset).toBe(sourceData.assets[0]);
+    expect(sourceData.entries[1].asset).toBe(sourceData.assets[0]);
+  });
+});

@@ -2,7 +2,9 @@ import fs from "fs-extra";
 import { GraphQLClient } from "graphql-request";
 
 import * as logger from "../../helpers/logger.js";
-import * as transforms from "./transforms.js";
+import transformBuildIndexes from "./transformBuildIndexes.js";
+import transformLinkRefs from "./transformLinkRefs.js";
+import transformPullOneFromArray from "./transformPullOneFromArray.js";
 
 const defaultOptions = {
   createPagesForEntryTypes: [],
@@ -32,9 +34,9 @@ export default class CmsSource {
         entry.handle = `${entry.sectionHandle}/${entry.typeHandle}`;
       }
 
-      transforms.transformPullOneFromArray(cmsData);
-      transforms.transformBuildIndexes(cmsData);
-      transforms.transformLinkRefs(cmsData);
+      transformPullOneFromArray(cmsData);
+      transformBuildIndexes(cmsData);
+      transformLinkRefs(cmsData);
 
       return cmsData;
     }
