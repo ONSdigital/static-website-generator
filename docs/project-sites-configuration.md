@@ -17,6 +17,8 @@ The following properties are required for each site:
 
 - `sources` (Array\<[Source](#content-sources)\>) - Configures content sources for the site.
 
+- `templatesPath` (String) - Path to the templates directory for this site. Defaults to "templates" directory in root of project.
+
 These can typically be setup with environment variables as follows:
 
 ```js
@@ -96,13 +98,17 @@ export default [
 
 ### CraftCMS source options
 
+- **graphQL.createClient** ((endpoint, options): Client) (Required) - Factory function that is used to create the GraphQL client. If using the [graphql-request package](https://github.com/prisma-labs/graphql-request) then this can be configured as follows:
+
+    ```js
+    createClient: (endpoint, options) => new GraphQLClient(endpoint, options),
+    ```
+
 - **graphQL.endpoint** (String) (Required) - URL of Craft CMS GraphQL endpoint (eg. "https://cms.example.com/api/data").
 
 - **graphQL.headers** (Object) (Required) - Headers to include when making GraphQL request. This would include the GraphQL "Authorization" header.
 
 - **graphQL.queryFilePath** (String) (Required) - Path to the GraphQL query file (eg. "./graphql/content.gql").
-
-- **createPagesForEntryTypes** (Array\<String\>) (Required) - List of entry types of the format `{sectionHandle}/{typeHandle}` to create page objects from (eg. `[ "home/home", "news/article", "page/standard" ]`).
 
 
 ## Linked sites
