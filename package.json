@@ -19,7 +19,6 @@
     "front-matter": "^4.0.2",
     "fs-extra": "^10.1.0",
     "graphql": "^15.5.0",
-    "graphql-request": "^3.4.0",
     "marked": "^4.0.17",
     "moment": "^2.29.3",
     "nunjucks": "^3.2.3"
