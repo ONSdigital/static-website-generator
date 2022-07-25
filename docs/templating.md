@@ -2,9 +2,9 @@
 
 ## Template resolution
 
-When a **static** page is being rendered the template is resolved explicitly by using the template specified by the `layout` frontmatter parameter.
+When a page is being rendered the template is resolved explicitly by using the template specified by the `layout` frontmatter parameter.
 
-For example, the following example would use the "templates/page/test/page.njk" template:
+For example, the following example would use the "templates/layout/test/page.njk" template:
 
 ```yaml
 ---
@@ -12,14 +12,6 @@ title: Test page
 layout: test/page
 ---
 ```
-
-When a **CMS** page is being rendered the template is resolved using the following heirarchy where the top of the heirarchy takes precedence:
-
-- "templates/page/{sectionHandle}/{typeHandle}.njk"
-- "templates/page/{sectionHandle}/index.njk"
-- "templates/page/default.njk"
-
-> `sectionHandle` refers to the "Section Handle" of the CMS entry and `typeHandle` refers to the "Entry Type" within that section.
 
 
 ## Disable layout templating
