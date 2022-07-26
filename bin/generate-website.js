@@ -4,6 +4,7 @@ import path from "path";
 
 import Generator from "../src/Generator.js";
 import loadStringsSync from "../src/helpers/loadStringsSync.js";
+import writePage from "../src/generation/writePage.js";
 
 const PROJECT_PATH = process.cwd();
 const PROJECT_CONFIG_SITES_PATH = path.resolve(PROJECT_PATH, "./config/sites.js");
@@ -19,6 +20,7 @@ const PROJECT_DIST_PATH = path.resolve(PROJECT_PATH, "./dist");
     sites,
     stringsByLanguage,
     defaultTemplatesPath: PROJECT_DEFAULT_TEMPLATES_PATH,
+    writePage,
   });
 
   console.time("generate website");

@@ -9,7 +9,6 @@ import addUrlAttributes from "./generation/addUrlAttributes.js";
 import createPagesFromContentSources from "./generation/createPagesFromContentSources.js";
 import fetchSiteData from "./generation/fetchSiteData.js";
 import renderSitePages from "./generation/renderSitePages.js";
-import writePage from "./generation/writePage.js";
 
 export default class Generator {
   constructor(options) {
@@ -18,6 +17,7 @@ export default class Generator {
     this.sitesByName = Object.fromEntries(this.sites.map(site => ([ site.name, site ])));
     this.stringsByLanguage = options.stringsByLanguage;
     this.defaultTemplatesPath = options.defaultTemplatesPath;
+    this.writePage = options.writePage;
   }
 
   async generate(outputPath) {
@@ -62,7 +62,7 @@ export default class Generator {
         const renderer = await createRenderer(templatesPath, processedSite.data, processedSite.hooks?.setupNunjucks);
 
         const siteOutputPath = `${outputPath}/${processedSite.name}`;
-        await renderSitePages(siteOutputPath, processedSite, renderer, writePage);
+        await renderSitePages(siteOutputPath, processedSite, renderer, this.writePage);
 
         processedSite.hooks?.afterPagesWritten?.call(null, { siteOutputPath, processedSite });
       }
