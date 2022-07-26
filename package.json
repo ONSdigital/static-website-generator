@@ -12,7 +12,7 @@
     "generate-website": "bin/generate-website.js"
   },
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js '.*\\.spec\\.js' --silent",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js '.*\\.spec\\.js'",
     "create-release": "./scripts/create-release.sh"
   },
   "exports": {
