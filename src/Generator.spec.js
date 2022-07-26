@@ -75,7 +75,7 @@ function createExampleOptions(options = {}) {
 }
 
 describe("Generator", () => {
-  describe("x1234 async generate(outputPath)", () => {
+  describe("async generate(outputPath)", () => {
     it.each([
       [ "" ],
       [ null ],
