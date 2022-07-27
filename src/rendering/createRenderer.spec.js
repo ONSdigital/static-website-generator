@@ -89,16 +89,38 @@ describe("createRenderer()", () => {
   });
 
   it("adds the custom 'localize' filter", async () => {
-    const renderer = await createRenderer("tests/examples/templates", {});
-
-    const templateContext = {
+    const renderer = await createRenderer("tests/examples/templates", {
       site: { name: "en" },
       stringsByLanguage: { },
-    };
+    });
 
-    await expect(renderer.renderString('{{ "Home" | localize }}', templateContext))
+    await expect(renderer.renderString('{{ "Home" | localize }}'))
       .resolves
       .not.toThrow();
+  });
+
+  it("can use 'localize' filter inside a macro", async () => {
+    const renderer = await createRenderer("tests/examples/templates", {
+      site: { name: "en" },
+      stringsByLanguage: {
+        en: {
+          "main": {
+            "value": "Overridden value text",
+          },
+        },
+      },
+    });
+
+    const templateString = `
+      {% from "macros/macro-with-localize-filter.njk" import macroWithLocalizeFilter %}
+      {{
+        macroWithLocalizeFilter("value")
+      }}
+    `;
+
+    await expect(renderer.renderString(templateString))
+      .resolves
+      .toContain("Overridden value text");
   });
 
   it("adds the custom 'setProperty' filter", async () => {

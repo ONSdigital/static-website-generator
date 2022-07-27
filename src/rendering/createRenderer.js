@@ -3,7 +3,7 @@ import nunjucks from "nunjucks";
 
 import dateFilter from "./filters/dateFilter.js";
 import itemsList_from_navigationItemsFilter from "./filters/itemsList_from_navigationItemsFilter.js";
-import localizeFilter from "./filters/localizeFilter.js";
+import createLocalizeFilter from "./filters/localizeFilter.js";
 import setPropertyFilter from "./filters/setPropertyFilter.js";
 import uniqueIdFilter from "./filters/uniqueIdFilter.js";
 
@@ -23,7 +23,7 @@ export default async function createRenderer(templatesPath, data, setupNunjucks 
 
   nunjucksEnvironment.addFilter("date", dateFilter);
   nunjucksEnvironment.addFilter("itemsList_from_navigationItems", itemsList_from_navigationItemsFilter);
-  nunjucksEnvironment.addFilter("localize", localizeFilter);
+  nunjucksEnvironment.addFilter("localize", createLocalizeFilter(data.site, data.stringsByLanguage));
   nunjucksEnvironment.addFilter("setProperty", setPropertyFilter);
   nunjucksEnvironment.addFilter("uniqueId", uniqueIdFilter);
 
