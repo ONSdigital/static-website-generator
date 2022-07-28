@@ -1,3 +1,4 @@
 {
-  "exampleWithKey": "Keys are good for situations where there are large volumes of text..."
+  "exampleWithKey": "Keys are good for situations where there are large volumes of text...",
+  "exampleWithNullValue": null
 }

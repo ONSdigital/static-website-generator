@@ -26,5 +26,11 @@ describe("createLocalizeFilter(site, stringsByLanguage)", () => {
       
       expect(string).toBe(expectedString);
     });
+    
+    it("returns a `null` value when strings value is `null`", () => {
+      const string = localizeFilter("exampleWithNullValue", "main");
+      
+      expect(string).toBe(null);
+    });
   });
 });
