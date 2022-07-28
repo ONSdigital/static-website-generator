@@ -184,6 +184,22 @@ describe("createRenderer()", () => {
         .resolves
         .toBe("Some data: 17\n");
     });
+
+    it("provides context when an error occurs", async() => {
+      const renderer = await createRenderer("tests/examples/templates", {
+        site: { name: "en" },
+      });
+  
+      const examplePage = {
+        uri: "example-with-error",
+        title: "Example with error",
+        layout: "layouts/example-with-error",
+      };
+
+      await expect(renderer.render(examplePage, {}))
+        .rejects
+        .toThrow("An error occurred whilst rendering page 'example-with-error' from site 'en' with layout 'layouts/example-with-error'");
+    });
   });
 
   describe("renderer.renderString(templateString, context)", () => {

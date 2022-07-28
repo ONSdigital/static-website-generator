@@ -12,6 +12,12 @@ class FakeRenderer {
   }
 }
 
+class FakeRendererWithError {
+  renderString(templateText, context) {
+    throw new Error();
+  }
+}
+
 describe("NunjucksStaticProcessor", () => {
   describe("get extensions()", () => {
     it("returns the expected array", () => {
@@ -62,6 +68,7 @@ describe("NunjucksStaticProcessor", () => {
 
       await nunjucksStaticProcessor.process({
         renderer: fakeRenderer,
+        processedSite: { name: "en" },
         page: EXAMPLE_NUNJUCKS_PAGE,
       });
 
@@ -74,12 +81,28 @@ describe("NunjucksStaticProcessor", () => {
 
       const processedContent = await nunjucksStaticProcessor.process({
         renderer: fakeRenderer,
+        processedSite: { name: "en" },
         page: EXAMPLE_NUNJUCKS_PAGE,
       });
 
       expect(processedContent).toEqual({
         body: "FAKE OUTPUT",
       });
+    });
+
+    it("provides context when an error occurs", async() => {
+      const nunjucksStaticProcessor = new NunjucksStaticProcessor();
+      const fakeRendererWithError = new FakeRendererWithError();
+
+      const processedContentPromise = nunjucksStaticProcessor.process({
+        renderer: fakeRendererWithError,
+        processedSite: { name: "en" },
+        page: EXAMPLE_NUNJUCKS_PAGE,
+      });
+
+      await expect(processedContentPromise)
+        .rejects
+        .toThrow("NunjucksStaticProcessor: An error occurred whilst rendering body of page 'undefined' from site 'en'");
     });
   });
 });

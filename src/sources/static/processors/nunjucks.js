@@ -6,8 +6,15 @@ export default class NunjucksStaticProcessor extends StaticProcessor {
   }
 
   async process({ page, processedSite, renderer }) {
-    return {
-      body: await renderer.renderString(page.body, { page }),
-    };
+    try {
+      return {
+        body: renderer.renderString(page.body, { page }),
+      };
+    }
+    catch (err) {
+      const renderError = new Error(`NunjucksStaticProcessor: An error occurred whilst rendering body of page '${page.uri}' from site '${processedSite?.name}'`);
+      renderError.cause = err;
+      throw renderError;
+    }
   }
 }

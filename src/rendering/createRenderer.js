@@ -33,8 +33,15 @@ export default async function createRenderer(templatesPath, data, setupNunjucks 
     nunjucksEnvironment,
 
     async render(page, context = {}) {
-      const templateName = `${page.layout}.njk`;
-      return nunjucksEnvironment.render(templateName, { designSystemVersion, ...data, page, ...context });
+      try {
+        const templateName = `${page.layout}.njk`;
+        return nunjucksEnvironment.render(templateName, { designSystemVersion, ...data, page, ...context });
+      }
+      catch (err) {
+        const renderError = new Error(`An error occurred whilst rendering page '${page.uri}' from site '${data?.site?.name}' with layout '${page.layout}'`);
+        renderError.cause = err;
+        throw renderError;
+      }
     },
 
     async renderString(templateString, context = {}) {
