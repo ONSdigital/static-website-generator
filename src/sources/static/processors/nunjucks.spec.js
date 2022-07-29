@@ -5,7 +5,7 @@ const EXAMPLE_NUNJUCKS_PAGE = {
 };
 
 class FakeRenderer {
-  renderString(templateText, context) {
+  async renderString(templateText, context) {
     this.templateText = templateText;
     this.context = context;
     return "FAKE OUTPUT";
@@ -13,7 +13,7 @@ class FakeRenderer {
 }
 
 class FakeRendererWithError {
-  renderString(templateText, context) {
+  async renderString(templateText, context) {
     throw new Error();
   }
 }

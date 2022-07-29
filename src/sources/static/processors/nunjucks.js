@@ -8,7 +8,7 @@ export default class NunjucksStaticProcessor extends StaticProcessor {
   async process({ page, processedSite, renderer }) {
     try {
       return {
-        body: renderer.renderString(page.body, { page }),
+        body: await renderer.renderString(page.body, { page }),
       };
     }
     catch (err) {
