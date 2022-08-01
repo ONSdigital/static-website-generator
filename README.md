@@ -1,5 +1,7 @@
 # static-website-generator
 
+[![Run tests](https://github.com/ONSdigital/static-website-generator/actions/workflows/tests.yml/badge.svg)](https://github.com/ONSdigital/static-website-generator/actions/workflows/tests.yml)
+
 A general purpose website generator which can render pages from static markdown files, nunjucks templates, CraftCMS instances, or from custom content sources. The generator makes the [ONS Design System](https://github.com/ONSdigital/design-system) components and macros available to templates as pages are being processed and rendered.
 
 > This package treats the [@ons/design-system](https://github.com/ONSdigital/design-system) package as a [peer dependency](https://nodejs.org/en/blog/npm/peer-dependencies/) leaving the website project to include the desired version.

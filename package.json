@@ -12,18 +12,24 @@
     "generate-website": "bin/generate-website.js"
   },
   "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js '.*\\.spec\\.js'",
     "create-release": "./scripts/create-release.sh"
+  },
+  "exports": {
+    "./*": "./src/*.js"
   },
   "dependencies": {
     "front-matter": "^4.0.2",
     "fs-extra": "^10.1.0",
-    "graphql": "^15.5.0",
-    "graphql-request": "^3.4.0",
     "marked": "^4.0.17",
     "moment": "^2.29.3",
     "nunjucks": "^3.2.3"
   },
   "peerDependencies": {
     "@ons/design-system": "x"
+  },
+  "devDependencies": {
+    "@ons/design-system": "^53.1.0",
+    "jest": "^28.1.3"
   }
 }
