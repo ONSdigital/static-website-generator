@@ -80,6 +80,14 @@ describe("createRenderer()", () => {
       .not.toThrow();
   });
 
+  it("adds the custom 'itemsList_from_navigation' filter", async () => {
+    const renderer = await createRenderer("tests/examples/templates", {});
+
+    await expect(renderer.renderString("{{ [] | itemsList_from_navigation }}"))
+      .resolves
+      .not.toThrow();
+  });
+
   it("adds the custom 'itemsList_from_navigationItems' filter", async () => {
     const renderer = await createRenderer("tests/examples/templates", {});
 
