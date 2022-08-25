@@ -18,6 +18,8 @@ export default function createStringReplacer(replacements) {
         .find(group => group[1] !== undefined);
       const patternIndex = parseInt(matchedGroup[0].substr(1));
       const patternKey = patterns[patternIndex];
-      return replacements[patternKey];
+      return (typeof replacements[patternKey]) === "function"
+        ? replacements[patternKey](groups)
+        : replacements[patternKey];
     });
 }
