@@ -20,7 +20,7 @@ export default class Generator {
     this.writePage = options.writePage;
   }
 
-  async generate(outputPath) {
+  async generate(outputPath, queryParams = {}) {
     if (!outputPath || outputPath === "/") {
       throw new Error(`Invalid outputPath "${outputPath}"`);
     }
@@ -28,7 +28,7 @@ export default class Generator {
     try {
       const processedSites = Object.fromEntries(await Promise.all(this.sites.map(async site => {
         logger.stage(`Fetching data for site "${site.name}"...`);
-        const data = await fetchSiteData(site, this.sitesByName);
+        const data = await fetchSiteData(site, this.sitesByName, queryParams);
 
         logger.stage(`Adding strings for site "${site.name}"...`);
         data.stringsByLanguage = this.stringsByLanguage;

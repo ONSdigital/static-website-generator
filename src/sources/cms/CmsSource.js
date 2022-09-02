@@ -15,7 +15,7 @@ export default class CmsSource {
 
   get name() { return "cms"; }
 
-  async fetchData(site) {
+  async fetchData(site, queryParams = {}) {
     try {
       logger.stage(`Craft CMS: Fetching data for ${site.name}...`);
 
@@ -30,6 +30,7 @@ export default class CmsSource {
       logger.step(`Requesting data...`);
       const cmsData = await client.request(queryGraphQL, {
         site: site.name,
+        ...queryParams
       });
 
       transformPullOneFromArray(cmsData);
