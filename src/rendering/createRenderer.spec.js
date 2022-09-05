@@ -47,6 +47,22 @@ describe("createRenderer()", () => {
       .toBe("53.1.0");
   });
 
+  it("adds a global to get the design system cdn base URL", async () => {
+    const renderer = await createRenderer("tests/examples/templates", {});
+
+    await expect(renderer.renderString("{{ designSystemCdnBaseUrl }}"))
+      .resolves
+      .toBe("https://cdn.ons.gov.uk/sdc/design-system/");
+  });
+
+  it("adds a global to get the versioned design system cdn URL", async () => {
+    const renderer = await createRenderer("tests/examples/templates", {});
+
+    await expect(renderer.renderString("{{ designSystemCdnUrl }}"))
+      .resolves
+      .toBe("https://cdn.ons.gov.uk/sdc/design-system/53.1.0");
+  });
+
   it("is able to load templates from the design system", async () => {
     const renderer = await createRenderer("tests/examples/templates", {});
 
