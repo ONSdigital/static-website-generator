@@ -6,7 +6,7 @@ const FAKE_CONTENT_SOURCES = [
   {
     name: "firstSource",
     fetchData: async (site) => ({ foo: site.title }),
-    createPages: (site, data) => ([
+    createPages: async (site, data) => ([
       {
         id: "contact",
         layout: "layouts/simple",
@@ -22,7 +22,7 @@ const FAKE_CONTENT_SOURCES = [
   {
     name: "secondSource",
     fetchData: async (site) => ({ bar: 42 }),
-    createPages: (site, data) => ([
+    createPages: async (site, data) => ([
       {
         id: "home",
         layout: "layouts/simple",
@@ -100,7 +100,7 @@ describe("Generator", () => {
     it("calls hook `preprocessDataForSite` to preprocess data", async () => {
       let hookCalledWithContext = [];
       const hooks = {
-        preprocessDataForSite: (context) => {
+        preprocessDataForSite: async (context) => {
           hookCalledWithContext.push(context);
         },
       };
@@ -117,7 +117,7 @@ describe("Generator", () => {
     it("adds source data to site data object", async () => {
       let hookCalledWithContext = [];
       const hooks = {
-        preprocessDataForSite: (context) => {
+        preprocessDataForSite: async (context) => {
           hookCalledWithContext.push(context);
         },
       };
@@ -133,7 +133,7 @@ describe("Generator", () => {
     it("adds `stringsByLanguage` to site data object", async () => {
       let hookCalledWithContext = [];
       const hooks = {
-        preprocessDataForSite: (context) => {
+        preprocessDataForSite: async (context) => {
           hookCalledWithContext.push(context);
         },
       };
@@ -149,7 +149,7 @@ describe("Generator", () => {
     it("calls hook `applyTransformsToPages` to transform page objects", async () => {
       let hookCalledWithContext = [];
       const hooks = {
-        applyTransformsToPages: (context) => {
+        applyTransformsToPages: async (context) => {
           hookCalledWithContext.push(context);
         },
       };
@@ -167,7 +167,7 @@ describe("Generator", () => {
     it("adds `url` and `absoluteUrl` attributes to page objects", async () => {
       let hookCalledWithContext = [];
       const hooks = {
-        applyTransformsToPages: (context) => {
+        applyTransformsToPages: async (context) => {
           hookCalledWithContext.push(context);
         },
       };
@@ -238,7 +238,7 @@ describe("Generator", () => {
     it("calls hook `afterPagesWritten` after all pages have been written", async () => {
       let hookCalledWithContext = [];
       const hooks = {
-        afterPagesWritten: (context) => {
+        afterPagesWritten: async (context) => {
           hookCalledWithContext.push(context);
         },
       };

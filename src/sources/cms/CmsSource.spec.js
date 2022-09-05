@@ -120,11 +120,11 @@ describe("CmsSource", () => {
     });
   });
 
-  describe("createPages(site, data)", () => {
-    it("returns an empty array", () => {
+  describe("async createPages(site, data)", () => {
+    it("returns an empty array", async () => {
       const cmsSource = new CmsSource();
 
-      const pages = cmsSource.createPages(FAKE_SITE, {});
+      const pages = await cmsSource.createPages(FAKE_SITE, {});
 
       expect(pages).toEqual([]);
     });

@@ -34,15 +34,15 @@ export default class Generator {
         data.stringsByLanguage = this.stringsByLanguage;
 
         logger.stage(`Pre-processing site data for site "${site.name}"...`);
-        site.hooks?.preprocessDataForSite?.call(null, { site, data });
+        await site.hooks?.preprocessDataForSite?.call(null, { site, data });
   
         logger.stage(`Creating pages for site ${site.name}...`);
-        let pages = createPagesFromContentSources(site, data);
+        let pages = await createPagesFromContentSources(site, data);
       
         logger.step("Applying default transforms to pages...");
         addUrlAttributes({ pages, site });
         logger.step("Applying transforms to pages...");
-        site.hooks?.applyTransformsToPages?.call(null, { pages, site, data });
+        await site.hooks?.applyTransformsToPages?.call(null, { pages, site, data });
       
         logger.step("Paginating listing pages...");
         pages = pages.map(paginate).flat();
@@ -64,7 +64,7 @@ export default class Generator {
         const siteOutputPath = `${outputPath}/${processedSite.name}`;
         await renderSitePages(siteOutputPath, processedSite, renderer, this.writePage);
 
-        processedSite.hooks?.afterPagesWritten?.call(null, { siteOutputPath, processedSite });
+        await processedSite.hooks?.afterPagesWritten?.call(null, { siteOutputPath, processedSite });
       }
     }
     catch (err) {
