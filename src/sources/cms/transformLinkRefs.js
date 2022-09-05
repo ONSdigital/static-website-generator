@@ -10,6 +10,9 @@ export default function transformLinkRefs(sourceData) {
         else if (obj[key]._categoryRef) {
           obj[key] = sourceData.getCategoryById(obj[key]._categoryRef);
         }
+        else if (obj[key]._tagRef) {
+          obj[key] = sourceData.getTagById(obj[key]._tagRef);
+        }
         else if (obj[key]._assetRef) {
           obj[key] = sourceData.getAssetById(obj[key]._assetRef);
         }

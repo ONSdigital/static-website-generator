@@ -16,6 +16,7 @@ Element references are automatically resolved when their identifiers have the ap
 
 - `_entryRef` - references a specific entry by id.
 - `_categoryRef` - references a specific category by id.
+- `_tagRef` - references a specific tag by id.
 - `_assetRef` - references a specific asset by id.
 
 For example, if the content schema allowed "Example Page" entries to reference other "Example Page" entries then the GraphQL query might look something like this:
