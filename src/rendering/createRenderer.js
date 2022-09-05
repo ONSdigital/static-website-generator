@@ -9,7 +9,13 @@ import setPropertyFilter from "./filters/setPropertyFilter.js";
 import uniqueIdFilter from "./filters/uniqueIdFilter.js";
 
 const designSystemPath = `${ process.cwd() }/node_modules/@ons/design-system`;
-const designSystemVersion = fs.readJsonSync(`${designSystemPath}/package.json`).version;
+
+let designSystemVersion = fs.readJsonSync(`${designSystemPath}/package.json`).version;
+if (designSystemVersion === "3.0.1") {
+  const projectPackageJson = fs.readJsonSync(`${process.cwd()}/package.json`, { encoding: "utf8" });
+  const designSystemDependency = projectPackageJson.dependencies["@ons/design-system"];
+  designSystemVersion = designSystemDependency.match(/#(\d+\.\d+\.\d+)$/)[1];
+}
 
 nunjucks.configure(null, {
   watch: false,
@@ -17,7 +23,7 @@ nunjucks.configure(null, {
 });
 
 export default async function createRenderer(templatesPath, data, setupNunjucks = null) {
-  const searchPaths = [ templatesPath, `${designSystemPath}` ];
+  const searchPaths = [ templatesPath, `${designSystemPath}`, `${designSystemPath}/src` ];
 
   const nunjucksLoader = new nunjucks.FileSystemLoader(searchPaths);
   const nunjucksEnvironment = new nunjucks.Environment(nunjucksLoader);
