@@ -22,7 +22,7 @@ describe("renderSitePages(siteOutputPath, processedSite, renderer, writePage)", 
         },
       ],
       hooks: {
-        postprocessPageOutput: ({ output, page }) => {
+        postprocessPageOutput: async ({ output, page }) => {
           processedBody = page.body;
           return output;
         },
@@ -108,7 +108,7 @@ describe("renderSitePages(siteOutputPath, processedSite, renderer, writePage)", 
         { title: "Fake page", body: "Example body content..." },
       ],
       hooks: {
-        postprocessPageOutput: (hookContext) => {
+        postprocessPageOutput: async (hookContext) => {
           actualHookContext = hookContext;
           return hookContext.output;
         },

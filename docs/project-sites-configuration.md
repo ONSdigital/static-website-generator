@@ -194,7 +194,7 @@ Provides an opportunity to register custom filters, extensions and globals for [
 - **nunjucksEnvironment** ([NunjucksEnvironment](https://mozilla.github.io/nunjucks/api.html#environment)) - The nunjucks environment that is being setup.
 
 
-### `hooks.preprocessDataForSite({ site, data })`
+### `async hooks.preprocessDataForSite({ site, data })`
 
 Pre-process site data before pages are created.
 
@@ -204,7 +204,7 @@ Pre-process site data before pages are created.
 - **data** (Object) - Data blob for site.
 
 
-### `hooks.createPagesForSite({ site, data })`
+### `async hooks.createPagesForSite({ site, data })`
 
 For procedurally generating pages.
 
@@ -214,7 +214,7 @@ For procedurally generating pages.
 - **data** (Object) - Data blob for site.
 
 
-### `applyTransformsToPages({ pages, site, data })`
+### `async applyTransformsToPages({ pages, site, data })`
 
 Applies transformations to pages before they are rendered.
 

@@ -5,14 +5,14 @@ const EXAMPLE_SITE = {
   sources: [
     {
       name: "first",
-      createPages: (site, sourceData) => ([
+      createPages: async (site, sourceData) => ([
         { title: "Page from first content source" },
         { title: "Another page from first content source" },
       ]),
     },
     {
       name: "second",
-      createPages: (site, sourceData) => ([
+      createPages: async (site, sourceData) => ([
         { title: "Page from second content source" },
         { title: "Another page from second content source" },
       ]),
@@ -29,10 +29,10 @@ const EXAMPLE_SITE_DATA = {
   },
 };
 
-describe("createPagesFromContentSources(site, data)", () => {
+describe("async createPagesFromContentSources(site, data)", () => {
   describe("pages from content sources", () => {
-    it("returns a flat array of pages from all content sources", () => {
-      const pages = createPagesFromContentSources(EXAMPLE_SITE, EXAMPLE_SITE_DATA);
+    it("returns a flat array of pages from all content sources", async () => {
+      const pages = await createPagesFromContentSources(EXAMPLE_SITE, EXAMPLE_SITE_DATA);
 
       expect(pages).toEqual([
         { title: "Page from first content source" },
@@ -42,7 +42,7 @@ describe("createPagesFromContentSources(site, data)", () => {
       ]);
     });
 
-    it("provides source data when creating pages", () => {
+    it("provides source data when creating pages", async () => {
       let providedSite, providedSourceData;
 
       const site = {
@@ -50,7 +50,7 @@ describe("createPagesFromContentSources(site, data)", () => {
         sources: [
           {
             name: "first",
-            createPages: (site, sourceData) => {
+            createPages: async (site, sourceData) => {
               providedSite = site;
               providedSourceData = sourceData;
               return [];
@@ -59,7 +59,7 @@ describe("createPagesFromContentSources(site, data)", () => {
         ],
       };
 
-      createPagesFromContentSources(site, EXAMPLE_SITE_DATA);
+      await createPagesFromContentSources(site, EXAMPLE_SITE_DATA);
 
       expect(providedSite).toBe(site);
       expect(providedSourceData).toBe(EXAMPLE_SITE_DATA.first);
@@ -68,18 +68,18 @@ describe("createPagesFromContentSources(site, data)", () => {
 
   describe("pages from hook", () => {
     describe("pages from content sources", () => {
-      it("returns a flat array of pages from all content sources", () => {
+      it("returns a flat array of pages from all content sources", async () => {
         const site = {
           ...EXAMPLE_SITE,
           hooks: {
-            createPagesForSite: ({site, data}) => ([
+            createPagesForSite: async ({site, data}) => ([
               { title: "Page from hook" },
               { title: "Another page from hook" },
             ]),
           }
         }
 
-        const pages = createPagesFromContentSources(site, EXAMPLE_SITE_DATA);
+        const pages = await createPagesFromContentSources(site, EXAMPLE_SITE_DATA);
   
         expect(pages).toEqual([
           { title: "Page from first content source" },
@@ -91,14 +91,14 @@ describe("createPagesFromContentSources(site, data)", () => {
         ]);
       });
   
-      it("provides source data when creating pages", () => {
+      it("provides source data when creating pages", async () => {
         let providedSite, providedSourceData;
   
         const site = {
           name: "en",
           sources: [],
           hooks: {
-            createPagesForSite: ({site, data}) => {
+            createPagesForSite: async ({site, data}) => {
               providedSite = site;
               providedSourceData = data;
               return [];
@@ -106,7 +106,7 @@ describe("createPagesFromContentSources(site, data)", () => {
           }
         };
   
-        createPagesFromContentSources(site, EXAMPLE_SITE_DATA);
+        await createPagesFromContentSources(site, EXAMPLE_SITE_DATA);
   
         expect(providedSite).toBe(site);
         expect(providedSourceData).toBe(EXAMPLE_SITE_DATA);

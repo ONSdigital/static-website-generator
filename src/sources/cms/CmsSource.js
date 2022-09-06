@@ -48,7 +48,7 @@ export default class CmsSource {
     }
   }
 
-  createPages(site, data) {
+  async createPages(site, data) {
     return [];
   }
 }

@@ -28,7 +28,7 @@ export default class StaticSource {
     };
   }
 
-  createPages(site, data) {
+  async createPages(site, data) {
     return data.pages;
   }
 

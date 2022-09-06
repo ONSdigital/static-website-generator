@@ -78,12 +78,12 @@ describe("StaticSource", () => {
     });
   });
 
-  describe("createPages(site, data)", () => {
+  describe("async createPages(site, data)", () => {
     it("returns all page objects", async () => {
       const staticSource = new StaticSource(EXAMPLE_OPTIONS);
       const data = await staticSource.fetchData(FAKE_SITE);
 
-      const pages = staticSource.createPages(FAKE_SITE, data);
+      const pages = await staticSource.createPages(FAKE_SITE, data);
 
       expect(pages).toBe(data.pages);
     });
