@@ -23,6 +23,17 @@ const EXAMPLE_SOURCE_DATA = {
     },
   ],
 
+  tags: [
+    {
+      id: 12,
+      title: "Example tag A",
+    },
+    {
+      id: 14,
+      title: "Example tag B",
+    },
+  ],
+
   assets: [
     {
       id: 4,
@@ -87,6 +98,35 @@ describe("transformBuildIndexes(sourceData)", () => {
       const result = sourceData.getCategoryById(4);
 
       expect(result.title).toBe("Example category B");
+    });
+  });
+
+  describe("getTagById(id)", () => {
+    it("doesn't fail when `sourceData.tags` is undefined", () => {
+      const sourceData = {};
+      transformBuildIndexes(sourceData);
+
+      const result = sourceData.getTagById(24);
+
+      expect(result).toBe(null);
+    });
+
+    it("returns `null` when tag does not exist", () => {
+      const sourceData = { ...EXAMPLE_SOURCE_DATA };
+      transformBuildIndexes(sourceData);
+
+      const result = sourceData.getTagById(12345);
+
+      expect(result).toBe(null);
+    });
+
+    it("returns the expected tag", () => {
+      const sourceData = { ...EXAMPLE_SOURCE_DATA };
+      transformBuildIndexes(sourceData);
+
+      const result = sourceData.getTagById(14);
+
+      expect(result.title).toBe("Example tag B");
     });
   });
 

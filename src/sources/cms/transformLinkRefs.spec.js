@@ -11,6 +11,9 @@ const EXAMPLE_SOURCE_DATA = {
         { _categoryRef: 2 },
         { _categoryRef: 4 },
       ],
+      tags: [
+        { _tagRef: 12 },
+      ],
       asset: { _assetRef: 4 },
     },
     {
@@ -19,6 +22,10 @@ const EXAMPLE_SOURCE_DATA = {
       entry: { _entryRef: 24 },
       categories: [
         { _categoryRef: 4 },
+      ],
+      tags: [
+        { _tagRef: 14 },
+        { _tagRef: 12 },
       ],
       asset: { _assetRef: 4 },
     },
@@ -32,6 +39,17 @@ const EXAMPLE_SOURCE_DATA = {
     {
       id: 4,
       title: "Example category B",
+    },
+  ],
+
+  tags: [
+    {
+      id: 12,
+      title: "Example tag A",
+    },
+    {
+      id: 14,
+      title: "Example tag B",
     },
   ],
 
@@ -63,6 +81,17 @@ describe("transformLinkRefs(sourceData)", () => {
     expect(sourceData.entries[0].categories[0]).toBe(sourceData.categories[0]);
     expect(sourceData.entries[0].categories[1]).toBe(sourceData.categories[1]);
     expect(sourceData.entries[1].categories[0]).toBe(sourceData.categories[1]);
+  });
+
+  it("replaces tag reference identifiers with actual tag reference", () => {
+    const sourceData = { ...EXAMPLE_SOURCE_DATA };
+    transformBuildIndexes(sourceData);
+
+    transformLinkRefs(sourceData);
+
+    expect(sourceData.entries[0].tags[0]).toBe(sourceData.tags[0]);
+    expect(sourceData.entries[1].tags[0]).toBe(sourceData.tags[1]);
+    expect(sourceData.entries[1].tags[1]).toBe(sourceData.tags[0]);
   });
 
   it("replaces asset reference identifiers with actual asset reference", () => {

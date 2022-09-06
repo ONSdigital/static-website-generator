@@ -45,6 +45,7 @@ The following globals are provided to templates by the generator:
 ---
   - `cms.getEntryById(id: number): object|null` - **function** - Gets an entry or null with the given ID.
   - `cms.getCategoryById(id: number): object|null` - **function** - Gets a category or null with the given ID.
+  - `cms.getTagById(id: number): object|null` - **function** - Gets a tag or null with the given ID.
   - `cms.getAssetById(id: number): object|null` - **function** - Gets an asset or null with the given ID.
 ---
 
