@@ -9,6 +9,7 @@ import setPropertyFilter from "./filters/setPropertyFilter.js";
 import uniqueIdFilter from "./filters/uniqueIdFilter.js";
 
 const designSystemPath = `${ process.cwd() }/node_modules/@ons/design-system`;
+const designSystemCdnBaseUrl = "https://cdn.ons.gov.uk/sdc/design-system/";
 
 let designSystemVersion = fs.readJsonSync(`${designSystemPath}/package.json`).version;
 if (designSystemVersion === "3.0.1") {
@@ -28,6 +29,10 @@ export default async function createRenderer(templatesPath, data, setupNunjucks 
   const nunjucksLoader = new nunjucks.FileSystemLoader(searchPaths);
   const nunjucksEnvironment = new nunjucks.Environment(nunjucksLoader);
 
+  nunjucksEnvironment.addGlobal("designSystemVersion", designSystemVersion);
+  nunjucksEnvironment.addGlobal("designSystemCdnBaseUrl", designSystemCdnBaseUrl);
+  nunjucksEnvironment.addGlobal("designSystemCdnUrl", designSystemCdnBaseUrl + designSystemVersion);
+
   nunjucksEnvironment.addFilter("date", dateFilter);
   nunjucksEnvironment.addFilter("itemsList_from_navigation", itemsList_from_navigationFilter);
   nunjucksEnvironment.addFilter("itemsList_from_navigationItems", itemsList_from_navigationItemsFilter);
@@ -43,7 +48,7 @@ export default async function createRenderer(templatesPath, data, setupNunjucks 
     async render(page, context = {}) {
       try {
         const templateName = `${page.layout}.njk`;
-        return nunjucksEnvironment.render(templateName, { designSystemVersion, ...data, page, ...context });
+        return nunjucksEnvironment.render(templateName, { ...data, page, ...context });
       }
       catch (err) {
         const renderError = new Error(`An error occurred whilst rendering page '${page.uri}' from site '${data?.site?.name}' with layout '${page.layout}'`);
@@ -53,7 +58,7 @@ export default async function createRenderer(templatesPath, data, setupNunjucks 
     },
 
     async renderString(templateString, context = {}) {
-      return nunjucksEnvironment.renderString(templateString, { designSystemVersion, ...data, ...context });
+      return nunjucksEnvironment.renderString(templateString, { ...data, ...context });
     },
   }
 }
