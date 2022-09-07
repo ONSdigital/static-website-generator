@@ -67,9 +67,11 @@ Accessing some value from a custom content source:
 
 The following custom filters have been defined for use in templates:
 
-- `localize(context = "main")` - Allows strings to be automatically localized when a localized string is defined; eg. `"Table of contents" | localize`. A language context can be provided for situations where there would be ambiguity, eg. `"Add" | localize("maths")`.
-
 - `date(format, locale = "en-gb")` - Formats a date using [moment.js](https://momentjs.com/).
+
+- `htmlContent` - Corrects internal URLs and decorates elements with ONS design system classes. This is useful for blobs of HTML content (eg. that from a WYSIWYG field). eg. `block.text | htmlContent | safe`.
+
+- `localize(context = "main")` - Allows strings to be automatically localized when a localized string is defined; eg. `"Table of contents" | localize`. A language context can be provided for situations where there would be ambiguity, eg. `"Add" | localize("maths")`.
 
 - `setProperty(key, value)` - Adds a property to an object which is useful in situations where properties need to be conditionally provided to a design system component. eg.
   ```nunjucks

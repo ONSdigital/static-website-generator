@@ -1,8 +1,13 @@
 import createRenderer from "./createRenderer.js";
 
+const site = {
+  name: "en",
+  templatesPath: "tests/examples/templates",
+};
+
 describe("createRenderer()", () => {
   it("returns an object with a nunjucks environment", async () => {
-    const renderer = await createRenderer("tests/examples/templates", {});
+    const renderer = await createRenderer({ site });
 
     await expect(renderer.nunjucksEnvironment.addFilter).toBeInstanceOf(Function);
   });
@@ -11,20 +16,20 @@ describe("createRenderer()", () => {
     let setupContext;
 
     const setupNunjucks = (context) => { setupContext = context };
-    const renderer = await createRenderer("tests/examples/templates", {}, setupNunjucks);
+    const renderer = await createRenderer({ site }, setupNunjucks);
 
     await expect(setupContext.nunjucksEnvironment).toBe(renderer.nunjucksEnvironment);
   });
 
   it("returns an object with render functions", async () => {
-    const renderer = await createRenderer("tests/examples/templates", {});
+    const renderer = await createRenderer({ site });
 
     expect(renderer.render).toBeInstanceOf(Function);
     expect(renderer.renderString).toBeInstanceOf(Function);
   });
 
   it("escapes html characters by default", async () => {
-    const renderer = await createRenderer("tests/examples/templates", {});
+    const renderer = await createRenderer({ site });
 
     await expect(renderer.renderString('{{ "<b>Test</b>" }}'))
       .resolves
@@ -32,7 +37,7 @@ describe("createRenderer()", () => {
   });
 
   it("does not escape html characters when `safe` filter is used", async () => {
-    const renderer = await createRenderer("tests/examples/templates", {});
+    const renderer = await createRenderer({ site });
 
     await expect(renderer.renderString('{{ "<b>Test</b>" | safe }}'))
       .resolves
@@ -40,7 +45,7 @@ describe("createRenderer()", () => {
   });
 
   it("adds a global to get the design system version", async () => {
-    const renderer = await createRenderer("tests/examples/templates", {});
+    const renderer = await createRenderer({ site });
 
     await expect(renderer.renderString("{{ designSystemVersion }}"))
       .resolves
@@ -48,7 +53,7 @@ describe("createRenderer()", () => {
   });
 
   it("adds a global to get the design system cdn base URL", async () => {
-    const renderer = await createRenderer("tests/examples/templates", {});
+    const renderer = await createRenderer({ site });
 
     await expect(renderer.renderString("{{ designSystemCdnBaseUrl }}"))
       .resolves
@@ -56,7 +61,7 @@ describe("createRenderer()", () => {
   });
 
   it("adds a global to get the versioned design system cdn URL", async () => {
-    const renderer = await createRenderer("tests/examples/templates", {});
+    const renderer = await createRenderer({ site });
 
     await expect(renderer.renderString("{{ designSystemCdnUrl }}"))
       .resolves
@@ -64,7 +69,7 @@ describe("createRenderer()", () => {
   });
 
   it("is able to load templates from the design system", async () => {
-    const renderer = await createRenderer("tests/examples/templates", {});
+    const renderer = await createRenderer({ site });
 
     const templateString = `
       {% from "components/panel/_macro.njk" import onsPanel %}
@@ -81,7 +86,7 @@ describe("createRenderer()", () => {
   });
 
   it("throws when using an undefined filter", async () => {
-    const renderer = await createRenderer("tests/examples/templates", {});
+    const renderer = await createRenderer({ site });
 
     await expect(renderer.renderString("{{ 2020-11-23 | nonExistentFilter }}"))
       .rejects
@@ -89,15 +94,23 @@ describe("createRenderer()", () => {
   });
 
   it("adds the custom 'date' filter", async () => {
-    const renderer = await createRenderer("tests/examples/templates", {});
+    const renderer = await createRenderer({ site });
 
     await expect(renderer.renderString("{{ 2020-11-23 | date }}"))
       .resolves
       .not.toThrow();
   });
 
+  it("adds the custom 'htmlContent' filter", async () => {
+    const renderer = await createRenderer({ site });
+
+    await expect(renderer.renderString("{{ '<table></table>' | htmlContent }}"))
+      .resolves
+      .not.toThrow();
+  });
+
   it("adds the custom 'itemsList_from_navigation' filter", async () => {
-    const renderer = await createRenderer("tests/examples/templates", {});
+    const renderer = await createRenderer({ site });
 
     await expect(renderer.renderString("{{ [] | itemsList_from_navigation }}"))
       .resolves
@@ -105,7 +118,7 @@ describe("createRenderer()", () => {
   });
 
   it("adds the custom 'itemsList_from_navigationItems' filter", async () => {
-    const renderer = await createRenderer("tests/examples/templates", {});
+    const renderer = await createRenderer({ site });
 
     await expect(renderer.renderString("{{ [] | itemsList_from_navigationItems }}"))
       .resolves
@@ -113,8 +126,8 @@ describe("createRenderer()", () => {
   });
 
   it("adds the custom 'localize' filter", async () => {
-    const renderer = await createRenderer("tests/examples/templates", {
-      site: { name: "en" },
+    const renderer = await createRenderer({
+      site,
       stringsByLanguage: { },
     });
 
@@ -124,8 +137,8 @@ describe("createRenderer()", () => {
   });
 
   it("can use 'localize' filter inside a macro", async () => {
-    const renderer = await createRenderer("tests/examples/templates", {
-      site: { name: "en" },
+    const renderer = await createRenderer({
+      site,
       stringsByLanguage: {
         en: {
           "main": {
@@ -148,7 +161,7 @@ describe("createRenderer()", () => {
   });
 
   it("adds the custom 'setProperty' filter", async () => {
-    const renderer = await createRenderer("tests/examples/templates", {});
+    const renderer = await createRenderer({ site });
 
     await expect(renderer.renderString('{{ {} | setProperty("someValue", 42) }}'))
       .resolves
@@ -156,7 +169,7 @@ describe("createRenderer()", () => {
   });
 
   it("adds the custom 'uniqueId' filter", async () => {
-    const renderer = await createRenderer("tests/examples/templates", {});
+    const renderer = await createRenderer({ site });
 
     await expect(renderer.renderString('{{ "article" | uniqueId }}'))
       .resolves
@@ -165,7 +178,7 @@ describe("createRenderer()", () => {
 
   describe("renderer.render(page, context)", () => {
     it("resolves page templates from the given templates directory", async () => {
-      const renderer = await createRenderer("tests/examples/templates", {});
+      const renderer = await createRenderer({ site });
   
       const examplePage = {
         title: "Example page",
@@ -178,7 +191,8 @@ describe("createRenderer()", () => {
     });
 
     it("makes data object accessible from templates", async () => {
-      const renderer = await createRenderer("tests/examples/templates", {
+      const renderer = await createRenderer({
+        site,
         someData: { number: 42 },
       });
   
@@ -193,7 +207,7 @@ describe("createRenderer()", () => {
     });
 
     it("makes context object accessible from templates", async () => {
-      const renderer = await createRenderer("tests/examples/templates", {});
+      const renderer = await createRenderer({ site });
   
       const examplePage = {
         title: "Example with data",
@@ -210,9 +224,7 @@ describe("createRenderer()", () => {
     });
 
     it("provides context when an error occurs", async() => {
-      const renderer = await createRenderer("tests/examples/templates", {
-        site: { name: "en" },
-      });
+      const renderer = await createRenderer({ site });
   
       const examplePage = {
         uri: "example-with-error",
@@ -228,7 +240,7 @@ describe("createRenderer()", () => {
 
   describe("renderer.renderString(templateString, context)", () => {
     it("renders template string", async () => {
-      const renderer = await createRenderer("tests/examples/templates", {});
+      const renderer = await createRenderer({ site });
 
       await expect(renderer.renderString("Test: {{ 3 + 5 }}"))
         .resolves
@@ -236,7 +248,8 @@ describe("createRenderer()", () => {
     });
 
     it("makes data object accessible from templates", async () => {
-      const renderer = await createRenderer("tests/examples/templates", {
+      const renderer = await createRenderer({
+        site,
         someData: { number: 123 },
       });
 
@@ -246,7 +259,7 @@ describe("createRenderer()", () => {
     });
 
     it("makes data object accessible from templates", async () => {
-      const renderer = await createRenderer("tests/examples/templates", {});
+      const renderer = await createRenderer({ site });
 
       const templateContext = {
         someData: { number: 96 },
