@@ -1,5 +1,5 @@
 export default function createStringReplacer(replacements) {
-  const patterns = Object.keys(replacements);
+  const patterns = Object.keys(replacements).filter(key => key !== "");
 
   let replacementsPattern = "";
   for (let i = 0; i < patterns.length; ++i) {
