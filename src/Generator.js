@@ -27,6 +27,8 @@ export default class Generator {
 
     try {
       const processedSites = Object.fromEntries(await Promise.all(this.sites.map(async site => {
+        site.templatesPath = site.templatesPath ?? this.defaultTemplatesPath;
+
         logger.stage(`Fetching data for site "${site.name}"...`);
         const data = await fetchSiteData(site, this.sitesByName);
 
@@ -58,8 +60,7 @@ export default class Generator {
   
       for (let processedSite of Object.values(processedSites)) {
         logger.stage(`Rendering and writing pages for site "${processedSite.name}"...`);
-        const templatesPath = processedSite.templatesPath ?? this.defaultTemplatesPath;
-        const renderer = await createRenderer(templatesPath, processedSite.data, processedSite.hooks?.setupNunjucks);
+        const renderer = await createRenderer(processedSite.data, processedSite.hooks?.setupNunjucks);
 
         const siteOutputPath = `${outputPath}/${processedSite.name}`;
         await renderSitePages(siteOutputPath, processedSite, renderer, this.writePage);

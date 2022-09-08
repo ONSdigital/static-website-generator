@@ -1,10 +1,11 @@
 import fs from "fs-extra";
 import nunjucks from "nunjucks";
 
+import createHtmlContentFilter from "./filters/htmlContentFilter.js";
+import createLocalizeFilter from "./filters/localizeFilter.js";
 import dateFilter from "./filters/dateFilter.js";
 import itemsList_from_navigationFilter from "./filters/itemsList_from_navigationFilter.js";
 import itemsList_from_navigationItemsFilter from "./filters/itemsList_from_navigationItemsFilter.js";
-import createLocalizeFilter from "./filters/localizeFilter.js";
 import setPropertyFilter from "./filters/setPropertyFilter.js";
 import uniqueIdFilter from "./filters/uniqueIdFilter.js";
 
@@ -23,8 +24,8 @@ nunjucks.configure(null, {
   autoescape: true
 });
 
-export default async function createRenderer(templatesPath, data, setupNunjucks = null) {
-  const searchPaths = [ templatesPath, `${designSystemPath}`, `${designSystemPath}/src` ];
+export default async function createRenderer(data, setupNunjucks = null) {
+  const searchPaths = [ data.site.templatesPath, `${designSystemPath}`, `${designSystemPath}/src` ];
 
   const nunjucksLoader = new nunjucks.FileSystemLoader(searchPaths);
   const nunjucksEnvironment = new nunjucks.Environment(nunjucksLoader);
@@ -34,6 +35,7 @@ export default async function createRenderer(templatesPath, data, setupNunjucks 
   nunjucksEnvironment.addGlobal("designSystemCdnUrl", designSystemCdnBaseUrl + designSystemVersion);
 
   nunjucksEnvironment.addFilter("date", dateFilter);
+  nunjucksEnvironment.addFilter("htmlContent", createHtmlContentFilter(data));
   nunjucksEnvironment.addFilter("itemsList_from_navigation", itemsList_from_navigationFilter);
   nunjucksEnvironment.addFilter("itemsList_from_navigationItems", itemsList_from_navigationItemsFilter);
   nunjucksEnvironment.addFilter("localize", createLocalizeFilter(data.site, data.stringsByLanguage));

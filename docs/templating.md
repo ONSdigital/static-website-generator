@@ -67,9 +67,13 @@ Accessing some value from a custom content source:
 
 The following custom filters have been defined for use in templates:
 
-- `localize(context = "main")` - Allows strings to be automatically localized when a localized string is defined; eg. `"Table of contents" | localize`. A language context can be provided for situations where there would be ambiguity, eg. `"Add" | localize("maths")`.
-
 - `date(format, locale = "en-gb")` - Formats a date using [moment.js](https://momentjs.com/).
+
+- `htmlContent` - Corrects internal URLs and decorates elements with ONS design system classes. This is useful for blobs of HTML content (eg. that from a WYSIWYG field). eg. `block.text | htmlContent | safe`.
+
+- `itemsList_from_navigation` - Produces an array of items for use with ONS design system navigation components and lists. This uses the `navigationTitle`, `title` and `url` of provided entries to resolve navigation items.
+
+- `localize(context = "main")` - Allows strings to be automatically localized when a localized string is defined; eg. `"Table of contents" | localize`. A language context can be provided for situations where there would be ambiguity, eg. `"Add" | localize("maths")`.
 
 - `setProperty(key, value)` - Adds a property to an object which is useful in situations where properties need to be conditionally provided to a design system component. eg.
   ```nunjucks
@@ -80,3 +84,5 @@ The following custom filters have been defined for use in templates:
       {% set options = options | setProperty("second", "Second option") %}
   {% endif %}
   ```
+
+- `uniqueId(base)` - Produces a unique identifier so that HTML elements can reference one another. For example, a variable can be defined with `{% set id = "foo" | uniqueId %}` which can then be used with multiple elements `<input id="{{ id }}"/>` and `<label for="{{ id }}">Example field</label>`.

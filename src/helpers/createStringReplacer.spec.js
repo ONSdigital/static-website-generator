@@ -22,4 +22,16 @@ describe("createStringReplacer(replacements)", () => {
 
     expect(result).toBe("72 bar 14");
   });
+
+  it("ignores empty keys", () => {
+    const replacer = createStringReplacer({
+      "abc": "foo",
+      "": "bar",
+      "": "qux",
+    });
+
+    const result = replacer("abcd abc def");
+
+    expect(result).toBe("food foo def");
+  });
 });
