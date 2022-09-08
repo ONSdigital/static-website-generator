@@ -2,9 +2,9 @@ import fs from "fs-extra";
 import path from "path";
 import frontMatter from "front-matter";
 
-import MarkdownStaticProcessor from "./processors/markdown.js";
-import NunjucksStaticProcessor from "./processors/nunjucks.js";
-import HtmlStaticProcessor from "./processors/html.js";
+import MarkdownStaticProcessor from "../../processors/markdown.js";
+import NunjucksStaticProcessor from "../../processors/nunjucks.js";
+import HtmlStaticProcessor from "../../processors/html.js";
 
 const defaultOptions = {
   processors: [
