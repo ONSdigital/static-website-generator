@@ -7,33 +7,6 @@ const FAKE_RENDERER = {
 const FAKE_WRITE_PAGE = async () => {};
 
 describe("renderSitePages(siteOutputPath, processedSite, renderer, writePage)", () => {
-  it("uses `_processor` to generate page body", async () => {
-    let processedBody;
-    const processedSite = {
-      pages: [
-        {
-          title: "Fake page",
-          layout: null,
-          _processor: {
-            process: (context) => ({
-              body: "Processed content",
-            }),
-          },
-        },
-      ],
-      hooks: {
-        postprocessPageOutput: async ({ output, page }) => {
-          processedBody = page.body;
-          return output;
-        },
-      }
-    };
-
-    await renderSitePages("dist", processedSite, FAKE_RENDERER, FAKE_WRITE_PAGE);
-
-    expect(processedBody).toBe("Processed content");
-  });
-
   it("wraps processed output with rendered template", async () => {
     let processedOutput;
     const processedSite = {
@@ -41,11 +14,7 @@ describe("renderSitePages(siteOutputPath, processedSite, renderer, writePage)", 
         {
           title: "Fake page",
           layout: "example",
-          _processor: {
-            process: (context) => ({
-              body: "Processed content",
-            }),
-          },
+          body: "Body content",
         },
       ],
     };
@@ -56,21 +25,21 @@ describe("renderSitePages(siteOutputPath, processedSite, renderer, writePage)", 
 
     await renderSitePages("dist", processedSite, FAKE_RENDERER, fakeWritePage);
 
-    expect(processedOutput).toBe("<section>Processed content</section>");
+    expect(processedOutput).toBe("<section>Body content</section>");
   });
 
-  it("does not wrap processed output with rendered template when layout is `null`", async () => {
+  it.each([
+    null,
+    undefined,
+    "",
+  ])("does not wrap processed output with rendered template when layout is %s", async (layout) => {
     let processedOutput;
     const processedSite = {
       pages: [
         {
           title: "Fake page",
-          layout: null,
-          _processor: {
-            process: (context) => ({
-              body: "Processed content",
-            }),
-          },
+          layout,
+          body: "Body content",
         },
       ],
     };
@@ -81,31 +50,14 @@ describe("renderSitePages(siteOutputPath, processedSite, renderer, writePage)", 
 
     await renderSitePages("dist", processedSite, FAKE_RENDERER, fakeWritePage);
 
-    expect(processedOutput).toBe("Processed content");
-  });
-
-  it("uses renderer when layout is `null` and when there is no processor", async () => {
-    const processedSite = {
-      pages: [
-        { layout: null, title: "Fake page", body: "Example body content..." },
-      ],
-    };
-
-    let actualProcessedOutput;
-    const fakeWritePage = async (outputPath, processedOutput) => {
-      actualProcessedOutput = processedOutput;
-    };
-
-    await renderSitePages("dist", processedSite, FAKE_RENDERER, fakeWritePage);
-
-    expect(actualProcessedOutput).toBe("<section>Example body content...</section>");
+    expect(processedOutput).toBe("Body content");
   });
 
   it("calls `postprocessPageOutput` hook with expected parameters", async () => {
     let actualHookContext;
     const processedSite = {
       pages: [
-        { title: "Fake page", body: "Example body content..." },
+        { layout: "example", title: "Fake page", body: "Example body content..." },
       ],
       hooks: {
         postprocessPageOutput: async (hookContext) => {
@@ -125,7 +77,7 @@ describe("renderSitePages(siteOutputPath, processedSite, renderer, writePage)", 
   it("calls `writePage` with expected parameters when `uri` is defined for page", async () => {
     const processedSite = {
       pages: [
-        { uri: "fake/page", title: "Fake page", body: "Example body content..." },
+        { layout: "example", uri: "fake/page", title: "Fake page", body: "Example body content..." },
       ],
     };
 
@@ -144,7 +96,7 @@ describe("renderSitePages(siteOutputPath, processedSite, renderer, writePage)", 
   it("calls `writePage` with a default output path of 'index.html' when no `uri` is defined for page", async () => {
     const processedSite = {
       pages: [
-        { title: "Fake page", body: "Example body content..." },
+        { layout: "example", title: "Fake page", body: "Example body content..." },
       ],
     };
 

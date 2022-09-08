@@ -176,18 +176,19 @@ describe("createRenderer()", () => {
       .not.toThrow();
   });
 
-  describe("renderer.render(page, context)", () => {
+  describe("async renderer.render(page, context)", () => {
     it("resolves page templates from the given templates directory", async () => {
       const renderer = await createRenderer({ site });
   
       const examplePage = {
         title: "Example page",
         layout: "layouts/simple",
+        body: "Example body content."
       };
 
       await expect(renderer.render(examplePage))
         .resolves
-        .toBe("Page title: Example page\n");
+        .toBe("Page title: Example page\n\nExample body content.\n");
     });
 
     it("makes data object accessible from templates", async () => {
@@ -238,7 +239,7 @@ describe("createRenderer()", () => {
     });
   });
 
-  describe("renderer.renderString(templateString, context)", () => {
+  describe("async renderer.renderString(templateString, context)", () => {
     it("renders template string", async () => {
       const renderer = await createRenderer({ site });
 

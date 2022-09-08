@@ -59,12 +59,21 @@ export default class Generator {
       await fs.remove(outputPath);
   
       for (let processedSite of Object.values(processedSites)) {
-        logger.stage(`Rendering and writing pages for site "${processedSite.name}"...`);
         const renderer = await createRenderer(processedSite.data, processedSite.hooks?.setupNunjucks);
 
+        logger.stage(`Pre-processing pages for site "${processedSite.name}"...`);
+        for (let page of processedSite.pages) {
+          if (!!page._processor) {
+            const processedResult = await page._processor.process({ page, processedSite, renderer });
+            page.body = processedResult.body;
+          }
+        }
+
+        logger.stage(`Rendering and writing pages for site "${processedSite.name}"...`);
         const siteOutputPath = `${outputPath}/${processedSite.name}`;
         await renderSitePages(siteOutputPath, processedSite, renderer, this.writePage);
 
+        logger.stage(`Post-processing site "${processedSite.name}"...`);
         await processedSite.hooks?.afterPagesWritten?.call(null, { siteOutputPath, processedSite });
       }
     }
