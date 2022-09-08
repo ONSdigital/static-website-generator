@@ -225,7 +225,7 @@ describe("createRenderer()", () => {
 
     it("provides context when an error occurs", async() => {
       const renderer = await createRenderer({ site });
-  
+
       const examplePage = {
         uri: "example-with-error",
         title: "Example with error",
@@ -234,7 +234,7 @@ describe("createRenderer()", () => {
 
       await expect(renderer.render(examplePage, {}))
         .rejects
-        .toThrow("An error occurred whilst rendering page 'example-with-error' from site 'en' with layout 'layouts/example-with-error'");
+        .toThrow("A problem occurred whilst rendering page '/example-with-error'\n\nlayout: layouts/example-with-error\nsite: en");
     });
   });
 
@@ -268,6 +268,14 @@ describe("createRenderer()", () => {
       await expect(renderer.renderString("Some number: {{ someData.number }}", templateContext))
         .resolves
         .toBe("Some number: 96");
+    });
+
+    it("provides context when an error occurs", async() => {
+      const renderer = await createRenderer({ site });
+
+      await expect(renderer.renderString("{{ foo() }}"))
+        .rejects
+        .toThrow("A problem occurred whilst rendering string for site 'en'.");
     });
   });
 });

@@ -69,7 +69,16 @@ export default class Generator {
       }
     }
     catch (err) {
-      console.error(err);
+      if (err.name === "RenderError") {
+        console.log("\n-------------------------------------------------------------------------------------");
+        console.error(err.message);
+        console.log("");
+        console.error(err.cause);
+        console.log("-------------------------------------------------------------------------------------\n");
+      }
+      else {
+        console.error(err);
+      }
       process.exit(1);
     }
   }
