@@ -53,14 +53,23 @@ export default async function createRenderer(data, setupNunjucks = null) {
         return nunjucksEnvironment.render(templateName, { ...data, page, ...context });
       }
       catch (err) {
-        const renderError = new Error(`An error occurred whilst rendering page '${page.uri}' from site '${data?.site?.name}' with layout '${page.layout}'`);
+        const renderError = new Error(`A problem occurred whilst rendering page '${data?.site?.baseUrl ?? "/"}${page.uri}'\n\nlayout: ${page.layout}\nsite: ${data?.site?.name ?? "(undefined)"}`);
+        renderError.name = "RenderError";
         renderError.cause = err;
         throw renderError;
       }
     },
 
     async renderString(templateString, context = {}) {
-      return nunjucksEnvironment.renderString(templateString, { ...data, ...context });
+      try {
+        return nunjucksEnvironment.renderString(templateString, { ...data, ...context });
+      }
+      catch (err) {
+        const renderError = new Error(`A problem occurred whilst rendering string for site '${data?.site?.name ?? "(undefined)"}'.`);
+        renderError.name = "RenderError";
+        renderError.cause = err;
+        throw renderError;
+      }
     },
   }
 }
