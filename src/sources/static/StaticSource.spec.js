@@ -1,8 +1,8 @@
 import StaticSource from "./StaticSource.js";
 
-import MarkdownStaticProcessor from "./processors/markdown.js";
-import NunjucksStaticProcessor from "./processors/nunjucks.js";
-import HtmlStaticProcessor from "./processors/html.js";
+import MarkdownStaticProcessor from "../../processors/markdown.js";
+import NunjucksStaticProcessor from "../../processors/nunjucks.js";
+import HtmlStaticProcessor from "../../processors/html.js";
 
 const EXAMPLE_OPTIONS = {
   sourceDirectory: "tests/examples/content",

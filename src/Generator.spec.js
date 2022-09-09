@@ -12,6 +12,7 @@ const FAKE_CONTENT_SOURCES = [
         layout: "layouts/simple",
         uri: "contact",
         title: `Contact page (${site.name})`,
+        body: "Body content.",
         pagination: {
           data: [ 1, 2, 3 ],
           size: 2,
@@ -28,6 +29,12 @@ const FAKE_CONTENT_SOURCES = [
         layout: "layouts/simple",
         uri: "",
         title: `Home page (${site.name})`,
+        body: "Body content.",
+        _processor: {
+          process: async ({ page }) => ({
+            body: `Processed content: ${page.body}`,
+          }),
+        },
       },
     ]),
   },
@@ -197,10 +204,10 @@ describe("Generator", () => {
       expect(fs.existsSync("dist/test/removes-output/test.txt")).toBe(false);
     });
 
-    it("renders and writes each page", async () => {
+    it("pre-process, render and write each page", async () => {
       let writtenPages = [];
       const writePage = async (path, content) => {
-        writtenPages.push([ path, content ]);
+        writtenPages.push([ path, content.trim() ]);
       };
 
       const options = createExampleOptions({ writePage });
@@ -210,28 +217,28 @@ describe("Generator", () => {
 
       expect(writtenPages).toContainEqual([
         "dist/test/generate/en/index.html",
-        "Page title: Home page (en)\n",
+        "Page title: Home page (en)\n\nProcessed content: Body content.",
       ]);
       expect(writtenPages).toContainEqual([
         "dist/test/generate/en/contact/index.html",
-        "Page title: Contact page (en)\n",
+        "Page title: Contact page (en)\n\nBody content.",
       ]);
       expect(writtenPages).toContainEqual([
         "dist/test/generate/en/contact/2/index.html",
-        "Page title: Contact page (en)\n",
+        "Page title: Contact page (en)\n\nBody content.",
       ]);
 
       expect(writtenPages).toContainEqual([
         "dist/test/generate/cy/index.html",
-        "Page title: Home page (cy)\n",
+        "Page title: Home page (cy)\n\nProcessed content: Body content.",
       ]);
       expect(writtenPages).toContainEqual([
         "dist/test/generate/cy/contact/index.html",
-        "Page title: Contact page (cy)\n",
+        "Page title: Contact page (cy)\n\nBody content.",
       ]);
       expect(writtenPages).toContainEqual([
         "dist/test/generate/cy/contact/2/index.html",
-        "Page title: Contact page (cy)\n",
+        "Page title: Contact page (cy)\n\nBody content.",
       ]);
     });
 
