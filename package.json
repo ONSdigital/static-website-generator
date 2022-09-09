@@ -1,6 +1,6 @@
 {
   "name": "@ons/static-website-generator",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "repository": "https://github.com/ONSdigital/static-website-generator.git",
   "private": true,
   "type": "module",
