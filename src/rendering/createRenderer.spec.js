@@ -109,6 +109,14 @@ describe("createRenderer()", () => {
       .not.toThrow();
   });
 
+  it("adds the custom 'isInternalUrl' filter", async () => {
+    const renderer = await createRenderer({ site });
+
+    await expect(renderer.renderString("{{ 'https://localhost:3000/' | isInternalUrl }}"))
+      .resolves
+      .not.toThrow();
+  });
+
   it("adds the custom 'itemsList_from_navigation' filter", async () => {
     const renderer = await createRenderer({ site });
 
