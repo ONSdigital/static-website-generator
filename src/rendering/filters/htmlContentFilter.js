@@ -5,6 +5,7 @@ import resolveUrl from "../../helpers/resolveUrl.js";
 export default function createHtmlContentFilter(data) {
   const internalUrls = [
     "/",
+    "#",
     data.site.baseUrl ?? "",
     data.site.absoluteBaseUrl ?? "",
     data.site.craftBaseUrl ?? "",

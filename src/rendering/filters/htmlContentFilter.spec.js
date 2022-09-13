@@ -54,6 +54,12 @@ describe("createHtmlContentFilter(site, data)", () => {
       expect(string).toBe(`<a href="/en/cookies" class="foo" target="_self">Cookies page</a>`);
     });
 
+    it("does not decorate `<a>` internal anchor links", () => {
+      const string = htmlContentFilter(`<a class="foo" href="#feedback">Leave feedback</a>`);
+
+      expect(string).toBe(`<a href="#feedback" class="foo">Leave feedback</a>`);
+    });
+
     it("decorates `<table>` elements with the `ons-table` and `ons-table--scrollable` classes", () => {
       const string = htmlContentFilter(`<table>`);
 
