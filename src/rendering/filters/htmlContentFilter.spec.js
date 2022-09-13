@@ -1,6 +1,6 @@
 import createHtmlContentFilter from "./htmlContentFilter.js";
 
-describe("createHtmlContentFilter(site, data)", () => {
+describe("createHtmlContentFilter(site)", () => {
   const site = {
     baseUrl: "/en/",
     absoluteBaseUrl: "https://localhost/",
