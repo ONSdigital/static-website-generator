@@ -2,6 +2,7 @@ import fs from "fs-extra";
 import nunjucks from "nunjucks";
 
 import createHtmlContentFilter from "./filters/htmlContentFilter.js";
+import createIsInternalUrlFilter from "./filters/isInternalUrlFilter.js";
 import createLocalizeFilter from "./filters/localizeFilter.js";
 import dateFilter from "./filters/dateFilter.js";
 import itemsList_from_navigationFilter from "./filters/itemsList_from_navigationFilter.js";
@@ -36,6 +37,7 @@ export default async function createRenderer(data, setupNunjucks = null) {
 
   nunjucksEnvironment.addFilter("date", dateFilter);
   nunjucksEnvironment.addFilter("htmlContent", createHtmlContentFilter(data));
+  nunjucksEnvironment.addFilter("isInternalUrl", createIsInternalUrlFilter(data));
   nunjucksEnvironment.addFilter("itemsList_from_navigation", itemsList_from_navigationFilter);
   nunjucksEnvironment.addFilter("itemsList_from_navigationItems", itemsList_from_navigationItemsFilter);
   nunjucksEnvironment.addFilter("localize", createLocalizeFilter(data.site, data.stringsByLanguage));

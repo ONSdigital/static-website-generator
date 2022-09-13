@@ -71,6 +71,8 @@ The following custom filters have been defined for use in templates:
 
 - `htmlContent` - Corrects internal URLs and decorates elements with ONS design system classes. This is useful for blobs of HTML content (eg. that from a WYSIWYG field). eg. `block.text | htmlContent | safe`.
 
+- `isInternalUrl(url)` - Returns `true` when an internal URL is provided; otherwise, returns `false`.
+
 - `itemsList_from_navigation` - Produces an array of items for use with ONS design system navigation components and lists. This uses the `navigationTitle`, `title` and `url` of provided entries to resolve navigation items.
 
 - `localize(context = "main")` - Allows strings to be automatically localized when a localized string is defined; eg. `"Table of contents" | localize`. A language context can be provided for situations where there would be ambiguity, eg. `"Add" | localize("maths")`.

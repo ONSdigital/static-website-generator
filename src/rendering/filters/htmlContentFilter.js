@@ -1,16 +1,10 @@
 import createStringReplacer from "../../helpers/createStringReplacer.js";
 import escape from "../../helpers/escapeStringForRegExp.js";
+import getInternalUrlRegex from "../../helpers/getInternalUrlRegex.js";
 import resolveUrl from "../../helpers/resolveUrl.js";
 
 export default function createHtmlContentFilter(data) {
-  const internalUrls = [
-    "/",
-    data.site.baseUrl ?? "",
-    data.site.absoluteBaseUrl ?? "",
-    data.site.craftBaseUrl ?? "",
-  ].filter(url => url !== "");
-
-  const internalUrlPattern = new RegExp(`^(${internalUrls.map(escape).join("|")})`);
+  const internalUrlRegex = getInternalUrlRegex(data.site);
 
   const htmlFixer = createStringReplacer({
     // Process links.
@@ -18,7 +12,7 @@ export default function createHtmlContentFilter(data) {
       const href = resolveUrl(groups.linkAttributes.match(/href="([^"]+)"/)?.[1], data);
       let target = groups.linkAttributes.match(/target="([^"]+)"/)?.[1];
 
-      const isInternalLink = internalUrlPattern.test(href);
+      const isInternalLink = internalUrlRegex.test(href);
       if (!isInternalLink && !target) {
         target = "_blank";
       }
