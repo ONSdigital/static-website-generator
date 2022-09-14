@@ -38,4 +38,4 @@ echo "Pushing release branch..."
 git push -u origin release/v$1
 
 echo "Creating a pull request..."
-gh pr create --title "Release v$1" --body "" --base main --head release/v$1
+gh pr create --title "Release v$1" --body "" --base main --head release/v$1 --label release
