@@ -2,7 +2,7 @@ import createRenderer from "./createRenderer.js";
 
 const site = {
   name: "en",
-  templatesPath: "tests/examples/templates",
+  templateSearchPaths: [ "tests/examples/templates" ],
 };
 
 describe("createRenderer()", () => {
@@ -185,7 +185,7 @@ describe("createRenderer()", () => {
   });
 
   describe("async renderer.render(page, context)", () => {
-    it("resolves page templates from the given templates directory", async () => {
+    it("resolves page templates from the given template search paths", async () => {
       const renderer = await createRenderer({ site });
   
       const examplePage = {

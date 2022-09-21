@@ -17,7 +17,7 @@ The following properties are required for each site:
 
 - `sources` (Array\<[Source](#content-sources)\>) - Configures content sources for the site.
 
-- `templatesPath` (String) - Path to the templates directory for this site. Defaults to "templates" directory in root of project.
+- `templateSearchPaths` (Array\<String\>) - Template search paths for this site. Defaults to "templates" directory in root of project.
 
 These can typically be setup with environment variables as follows:
 

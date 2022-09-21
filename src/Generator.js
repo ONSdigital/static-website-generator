@@ -27,7 +27,9 @@ export default class Generator {
 
     try {
       const processedSites = Object.fromEntries(await Promise.all(this.sites.map(async site => {
-        site.templatesPath = site.templatesPath ?? this.defaultTemplatesPath;
+        if (!site.templateSearchPaths || site.templateSearchPaths.length === 0) {
+          site.templateSearchPaths = [ this.defaultTemplatesPath ];
+        }
 
         logger.stage(`Fetching data for site "${site.name}"...`);
         const data = await fetchSiteData(site, this.sitesByName);

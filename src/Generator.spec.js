@@ -50,7 +50,7 @@ function createExampleOptions(options = {}) {
         baseUrl: "/en/",
         absoluteBaseUrl: "https://localhost:1234/en/",
         sources: FAKE_CONTENT_SOURCES,
-        templatesPath: "tests/examples/templates",
+        templateSearchPaths: [ "tests/examples/templates" ],
         hooks,
       },
       {
@@ -59,7 +59,7 @@ function createExampleOptions(options = {}) {
         baseUrl: "/cy/",
         absoluteBaseUrl: "https://localhost:1234/cy/",
         sources: FAKE_CONTENT_SOURCES,
-        templatesPath: "tests/examples/templates",
+        templateSearchPaths: [ "tests/examples/templates" ],
         hooks,
       },
     ],
