@@ -26,7 +26,7 @@ nunjucks.configure(null, {
 });
 
 export default async function createRenderer(data, setupNunjucks = null) {
-  const searchPaths = [ data.site.templatesPath, `${designSystemPath}`, `${designSystemPath}/src` ];
+  const searchPaths = [ ...data.site.templateSearchPaths, `${designSystemPath}`, `${designSystemPath}/src` ];
 
   const nunjucksLoader = new nunjucks.FileSystemLoader(searchPaths);
   const nunjucksEnvironment = new nunjucks.Environment(nunjucksLoader);
