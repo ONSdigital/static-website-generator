@@ -33,7 +33,9 @@ In the case of a Nunjucks static source (eg. `content/en/example.njk`) the conte
 The following globals are provided to templates by the generator:
 
 ---
-  - `designSystemVersion` (string) - Semantic version of the design package.
+  - `designSystemVersion` (string) - Semantic version of the design system package.
+  - `designSystemCdnBaseUrl` (string) - Base URL to CDN for the design system package; eg. "https://cdn.ons.gov.uk/sdc/design-system/".
+  - `designSystemCdnUrl` (string) - URL to CDN for selected version of the design system package; eg. "https://cdn.ons.gov.uk/sdc/design-system/53.1.0".
 ---
   - `site.name` - **string** - Name of the current site; eg. "cy".
   - `site.absoluteBaseUrl` - **string** - Absolute base URL of the current site; eg. "http://localhost:8080/cy/".
