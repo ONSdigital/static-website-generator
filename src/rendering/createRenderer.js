@@ -4,11 +4,11 @@ import nunjucks from "nunjucks";
 import createHtmlContentFilter from "./filters/htmlContentFilter.js";
 import createIsInternalUrlFilter from "./filters/isInternalUrlFilter.js";
 import createLocalizeFilter from "./filters/localizeFilter.js";
+import createUniqueIdFilter from "./filters/uniqueIdFilter.js";
 import dateFilter from "./filters/dateFilter.js";
 import itemsList_from_navigationFilter from "./filters/itemsList_from_navigationFilter.js";
 import itemsList_from_navigationItemsFilter from "./filters/itemsList_from_navigationItemsFilter.js";
 import setPropertyFilter from "./filters/setPropertyFilter.js";
-import uniqueIdFilter from "./filters/uniqueIdFilter.js";
 
 const designSystemPath = `${ process.cwd() }/node_modules/@ons/design-system`;
 const designSystemCdnBaseUrl = "https://cdn.ons.gov.uk/sdc/design-system/";
@@ -42,7 +42,7 @@ export default async function createRenderer(data, setupNunjucks = null) {
   nunjucksEnvironment.addFilter("itemsList_from_navigationItems", itemsList_from_navigationItemsFilter);
   nunjucksEnvironment.addFilter("localize", createLocalizeFilter(data.site, data.stringsByLanguage));
   nunjucksEnvironment.addFilter("setProperty", setPropertyFilter);
-  nunjucksEnvironment.addFilter("uniqueId", uniqueIdFilter);
+  nunjucksEnvironment.addFilter("uniqueId", createUniqueIdFilter());
 
   setupNunjucks?.call(null, { nunjucksEnvironment });
 
