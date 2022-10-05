@@ -90,17 +90,4 @@ The following custom filters have been defined for use in templates:
   {% endif %}
   ```
 
-- `setAttributes(attributes)` - Sets attributes on an object which is useful in situations where properties need to be conditionally provided to a design system component. eg.
-  ```nunjucks
-  {% set options = {
-    "first": "First option"
-  } %}
-  {% if xyz %}
-      {% set options = options | setAttributes({
-        "second": "Second option",
-        "third": "Third option"
-      }) %}
-  {% endif %}
-  ```
-
 - `uniqueId(base)` - Produces a unique identifier so that HTML elements can reference one another. For example, a variable can be defined with `{% set id = "foo" | uniqueId %}` which can then be used with multiple elements `<input id="{{ id }}"/>` and `<label for="{{ id }}">Example field</label>`.
