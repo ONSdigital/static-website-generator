@@ -44,6 +44,7 @@ The following globals are provided to templates by the generator:
   - `site.title` - **string** - Localized website title from `generalGlobals.siteTitle`.
 ---
   - `page` - **object** - The current page either from static content, CraftCMS content or procedurally generated content.
+  - `getPageByUri(uri: string): object|null` - **function** - Gets a page object or null with the given URI.
 ---
   - `cms.getEntryById(id: number): object|null` - **function** - Gets an entry or null with the given ID.
   - `cms.getCategoryById(id: number): object|null` - **function** - Gets a category or null with the given ID.
