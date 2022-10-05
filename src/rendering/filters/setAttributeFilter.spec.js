@@ -1,10 +1,10 @@
-import setPropertyFilter from "./setPropertyFilter.js";
+import setAttributeFilter from "./setAttributeFilter.js";
 
-describe("setPropertyFilter(obj, key, value)", () => {
+describe("setAttributeFilter(obj, key, value)", () => {
   it("returns an object with the newly set property", () => {
     const inputObject = {};
 
-    const result = setPropertyFilter(inputObject, "someKey", "someValue");
+    const result = setAttributeFilter(inputObject, "someKey", "someValue");
 
     expect(result).toHaveProperty("someKey", "someValue");
   });
@@ -14,7 +14,7 @@ describe("setPropertyFilter(obj, key, value)", () => {
       originalKey: 42,
     };
 
-    const result = setPropertyFilter(inputObject, "someKey", "someValue");
+    const result = setAttributeFilter(inputObject, "someKey", "someValue");
 
     expect(result).toHaveProperty("originalKey", 42);
   });
@@ -22,7 +22,7 @@ describe("setPropertyFilter(obj, key, value)", () => {
   it("does not mutate input object", () => {
     const inputObject = {};
 
-    setPropertyFilter(inputObject, "someKey", "someValue");
+    setAttributeFilter(inputObject, "someKey", "someValue");
 
     expect(inputObject).not.toHaveProperty("someKey");
   });

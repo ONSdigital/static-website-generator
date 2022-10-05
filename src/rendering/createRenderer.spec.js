@@ -168,10 +168,10 @@ describe("createRenderer()", () => {
       .toContain("Overridden value text");
   });
 
-  it("adds the custom 'setProperty' filter", async () => {
+  it("adds the custom 'setAttribute' filter", async () => {
     const renderer = await createRenderer({ site });
 
-    await expect(renderer.renderString('{{ {} | setProperty("someValue", 42) }}'))
+    await expect(renderer.renderString('{{ {} | setAttribute("someValue", 42) }}'))
       .resolves
       .not.toThrow();
   });
