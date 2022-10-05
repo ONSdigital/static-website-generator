@@ -9,6 +9,7 @@ import dateFilter from "./filters/dateFilter.js";
 import itemsList_from_navigationFilter from "./filters/itemsList_from_navigationFilter.js";
 import itemsList_from_navigationItemsFilter from "./filters/itemsList_from_navigationItemsFilter.js";
 import setAttributeFilter from "./filters/setAttributeFilter.js";
+import setAttributesFilter from "./filters/setAttributesFilter.js";
 
 const designSystemPath = `${ process.cwd() }/node_modules/@ons/design-system`;
 const designSystemCdnBaseUrl = "https://cdn.ons.gov.uk/sdc/design-system/";
@@ -42,6 +43,7 @@ export default async function createRenderer(data, setupNunjucks = null) {
   nunjucksEnvironment.addFilter("itemsList_from_navigationItems", itemsList_from_navigationItemsFilter);
   nunjucksEnvironment.addFilter("localize", createLocalizeFilter(data.site, data.stringsByLanguage));
   nunjucksEnvironment.addFilter("setAttribute", setAttributeFilter);
+  nunjucksEnvironment.addFilter("setAttributes", setAttributesFilter);
   nunjucksEnvironment.addFilter("uniqueId", createUniqueIdFilter());
 
   setupNunjucks?.call(null, { nunjucksEnvironment });

@@ -176,6 +176,14 @@ describe("createRenderer()", () => {
       .not.toThrow();
   });
 
+  it("adds the custom 'setAttributes' filter", async () => {
+    const renderer = await createRenderer({ site });
+
+    await expect(renderer.renderString('{{ {} | setAttributes({ "someValue": 42 }) }}'))
+      .resolves
+      .not.toThrow();
+  });
+
   it("adds the custom 'uniqueId' filter", async () => {
     const renderer = await createRenderer({ site });
 
