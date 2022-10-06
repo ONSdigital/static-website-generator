@@ -42,12 +42,16 @@ export default class Generator {
   
         logger.stage(`Creating pages for site ${site.name}...`);
         let pages = await createPagesFromContentSources(site, data);
-      
+
+        logger.stage(`Indexing pages for site ${site.name}...`);
+        const pagesByUri = new Map(pages.map(item => [ item.uri, item ]));
+        data.getPageByUri = (uri) => pagesByUri.get(uri) ?? null;
+
         logger.step("Applying default transforms to pages...");
         addUrlAttributes({ pages, site });
         logger.step("Applying transforms to pages...");
         await site.hooks?.applyTransformsToPages?.call(null, { pages, site, data });
-      
+
         logger.step("Paginating listing pages...");
         pages = pages.map(paginate).flat();
 

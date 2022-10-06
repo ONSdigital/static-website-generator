@@ -153,6 +153,25 @@ describe("Generator", () => {
       expect(hookCalledWithContext[0].data.stringsByLanguage).toEqual(options.stringsByLanguage);
     });
 
+    it("emits the function `getPageByUri` on the site data object", async () => {
+      let hookCalledWithContext = [];
+      const hooks = {
+        preprocessDataForSite: async (context) => {
+          hookCalledWithContext.push(context);
+        },
+      };
+
+      const options = createExampleOptions({ hooks });
+      const generator = new Generator(options);
+
+      await generator.generate("dist/test/generate");
+
+      const homePage = hookCalledWithContext[0].data.getPageByUri("");
+      expect(homePage.title).toEqual("Home page (en)");
+      const contactPage = hookCalledWithContext[0].data.getPageByUri("contact");
+      expect(contactPage.title).toEqual("Contact page (en)");
+    });
+
     it("calls hook `applyTransformsToPages` to transform page objects", async () => {
       let hookCalledWithContext = [];
       const hooks = {
