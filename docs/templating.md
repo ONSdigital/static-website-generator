@@ -80,6 +80,7 @@ The following custom filters have been defined for use in templates:
 - `localize(context = "main")` - Allows strings to be automatically localized when a localized string is defined; eg. `"Table of contents" | localize`. A language context can be provided for situations where there would be ambiguity, eg. `"Add" | localize("maths")`.
 
 - `setProperty(key, value)` - Adds a property to an object which is useful in situations where properties need to be conditionally provided to a design system component. eg.
+
   ```nunjucks
   {% set options = {
     "first": "First option"

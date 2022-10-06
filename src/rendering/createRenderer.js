@@ -8,6 +8,7 @@ import createUniqueIdFilter from "./filters/uniqueIdFilter.js";
 import dateFilter from "./filters/dateFilter.js";
 import itemsList_from_navigationFilter from "./filters/itemsList_from_navigationFilter.js";
 import itemsList_from_navigationItemsFilter from "./filters/itemsList_from_navigationItemsFilter.js";
+import setAttributesFilter from "./filters/setAttributesFilter.js";
 import setPropertyFilter from "./filters/setPropertyFilter.js";
 
 const designSystemPath = `${ process.cwd() }/node_modules/@ons/design-system`;
@@ -41,6 +42,7 @@ export default async function createRenderer(data, setupNunjucks = null) {
   nunjucksEnvironment.addFilter("itemsList_from_navigation", itemsList_from_navigationFilter);
   nunjucksEnvironment.addFilter("itemsList_from_navigationItems", itemsList_from_navigationItemsFilter);
   nunjucksEnvironment.addFilter("localize", createLocalizeFilter(data.site, data.stringsByLanguage));
+  nunjucksEnvironment.addFilter("setAttributes", setAttributesFilter);
   nunjucksEnvironment.addFilter("setProperty", setPropertyFilter);
   nunjucksEnvironment.addFilter("uniqueId", createUniqueIdFilter());
 
