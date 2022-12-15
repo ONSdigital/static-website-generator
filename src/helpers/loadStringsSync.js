@@ -1,4 +1,6 @@
 import fs from "fs-extra";
+import glob from "glob";
+import path from "path";
 
 export default function loadStringsSync(stringsPath) {
   const strings = {};
@@ -19,6 +21,7 @@ function discoverAvailableLanguagesSync(stringsPath) {
 }
 
 function discoverStringFilesForLanguageSync(stringsPath, language) {
-  return (fs.readdirSync(`${stringsPath}/${language}`))
-    .filter(name => name.endsWith(".json"));
+  const basePath = `${stringsPath}/${language}`;
+  return glob.sync(`${basePath}/**/*.json`)
+    .map(absolutePath => path.relative(basePath, absolutePath));
 }
