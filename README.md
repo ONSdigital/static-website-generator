@@ -12,7 +12,7 @@ A general purpose website generator which can render pages from static markdown 
 Install the static website generator:
 
 ```
-yarn add https://github.com/ONSdigital/static-website-generator#v1.8.2
+yarn add https://github.com/ONSdigital/static-website-generator#v1.8.1
 ```
 
 Install the required version of the ONS Design System; for example, to install the latest version:

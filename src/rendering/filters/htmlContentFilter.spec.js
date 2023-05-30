@@ -60,10 +60,10 @@ describe("createHtmlContentFilter(site)", () => {
       expect(string).toBe(`<a href="#feedback" class="foo">Leave feedback</a>`);
     });
 
-    it("decorates `<table>` elements with the `ons-table` and `ons-table-scrollable ons-table-scrollable__content ons-u-d-b`  classes", () => {
+    it("decorates `<table>` elements with the `ons-table` and `ons-table--scrollable` classes", () => {
       const string = htmlContentFilter(`<table>`);
 
-      expect(string).toBe(`<table class="ons-table ons-table-scrollable ons-table-scrollable__content ons-u-d-b">`);
+      expect(string).toBe(`<table class="ons-table ons-table--scrollable">`);
     });
 
     it("decorates `<thead>` elements with the `ons-table__head` class", () => {
