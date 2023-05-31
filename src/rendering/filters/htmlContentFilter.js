@@ -35,7 +35,7 @@ export default function createHtmlContentFilter(data) {
 
     // Decorate table elements with ONS design system classes.
     [escape("<table>")]: '<div class="ons-table-scrollable__content"><table class="ons-table ons-table--scrollable">',
-    [escape("</table>")]: '</table><div>',
+    [escape("</table>")]: '</table></div>',
     [escape("<thead>")]: '<thead class="ons-table__head">',
     [escape("<tbody>")]: '<tbody class="ons-table__body">',
     [escape("<tr>")]: '<tr class="ons-table__row">',
