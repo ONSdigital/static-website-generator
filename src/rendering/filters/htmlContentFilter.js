@@ -5,7 +5,6 @@ import resolveUrl from "../../helpers/resolveUrl.js";
 
 export default function createHtmlContentFilter(data) {
   const internalUrlRegex = getInternalUrlRegex(data.site);
-  console.log('here')
   const htmlFixer = createStringReplacer({
     // Process links.
     "(?<link>[<]a(?<linkAttributes>[^>]+)[>](?<linkText>[^]+?)[<][/]a[>])": (groups) => {
