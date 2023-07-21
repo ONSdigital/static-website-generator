@@ -49,7 +49,7 @@ describe("createRenderer()", () => {
 
     await expect(renderer.renderString("{{ designSystemVersion }}"))
       .resolves
-      .toBe("62.2.2");
+      .toBe("65.0.0");
   });
 
   it("adds a global to get the design system cdn base URL", async () => {
@@ -65,7 +65,7 @@ describe("createRenderer()", () => {
 
     await expect(renderer.renderString("{{ designSystemCdnUrl }}"))
       .resolves
-      .toBe("https://cdn.ons.gov.uk/sdc/design-system/62.2.2");
+      .toBe("https://cdn.ons.gov.uk/sdc/design-system/65.0.0");
   });
 
   it("is able to load templates from the design system", async () => {

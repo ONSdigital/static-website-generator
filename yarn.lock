@@ -533,10 +533,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@ons/design-system@^53.1.0":
-  version "53.1.0"
-  resolved "https://registry.yarnpkg.com/@ons/design-system/-/design-system-53.1.0.tgz#25943fb6be572ef2b2344af2e6216c24ae10bea6"
-  integrity sha512-Dn5kTe/7okvPdbeBvZC/mieSJH0bMTo13svcWiySzFenFemysdkIRuM8Xx+HlAV0nPSB+qx+GXcs5yHB+gbWPQ==
+"@ons/design-system@^65.0.0":
+  version "65.0.0"
+  resolved "https://registry.yarnpkg.com/@ons/design-system/-/design-system-65.0.0.tgz#052057e6adb02ab1c66b8ffce3868021f8e6460c"
+  integrity sha512-5khkxMC4RSNUPlM/O4BaqZZB97ntOnDa3+2FPRBbqIp2g5FKeAfgD8zSgiBkUw6RPYBdu678YzYHwwrWA5P9TQ==
 
 "@sinclair/typebox@^0.24.1":
   version "0.24.20"
