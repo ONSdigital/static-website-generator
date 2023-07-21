@@ -30,7 +30,7 @@
     "@ons/design-system": "x"
   },
   "devDependencies": {
-    "@ons/design-system": "^62.2.2",
+    "@ons/design-system": "^65.0.0",
     "jest": "^28.1.3"
   }
 }
