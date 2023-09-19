@@ -1,4 +1,5 @@
 import { marked } from "marked";
+import { gfmHeadingId } from "marked-gfm-heading-id";
 
 import StaticProcessor from "./processor.js";
 
@@ -13,6 +14,7 @@ const defaultOptions = {
   xhtml: false
 };
 
+marked.use(gfmHeadingId(false));
 export default class MarkdownStaticProcessor extends StaticProcessor {
   constructor(options) {
     super();
