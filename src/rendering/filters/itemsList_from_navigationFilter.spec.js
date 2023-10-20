@@ -38,7 +38,7 @@ describe("itemsList_from_navigationFilter(navigationItems)", () => {
         text: "Data security",
         title: "Data security",
         url: "/data-security",
-        ariaLabel: null,
+        ariaLabel: "Data security",
       },
     ]);
   });
@@ -53,7 +53,7 @@ describe("itemsList_from_navigationFilter(navigationItems)", () => {
         text: "Data security",
         title: "Data security",
         url: "/data-security",
-        ariaLabel: null,
+        ariaLabel: "Data security",
       },
     ]);
   });
@@ -68,7 +68,7 @@ describe("itemsList_from_navigationFilter(navigationItems)", () => {
         text: "Data security",
         title: "Data security",
         url: "/data-security",
-        ariaLabel: "Keeping data secure",
+        ariaLabel: "Data security",
       },
     ]);
   });
