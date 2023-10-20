@@ -24,7 +24,7 @@ export default class MarkdownStaticProcessor extends StaticProcessor {
   }
 
   get extensions() {
-    return [ ".md" ];
+    return [".md"];
   }
 
   process({ page, processedSite, renderer }) {
