@@ -10,6 +10,6 @@ export default function itemsList_from_navigationFilter(navigation) {
       text: item?.navigationTitle,
       title: item?.navigationTitle,
       url: item?.url,
-      ariaLabel: item?.navigationTitle ?? item?.title
+      ariaLabel: null
     }));
 }
