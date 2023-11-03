@@ -1,6 +1,6 @@
 import { marked } from "marked";
 import { gfmHeadingId } from "marked-gfm-heading-id";
-
+import markedExtension from "./marked-extension.js";
 import StaticProcessor from "./processor.js";
 
 const defaultOptions = {
@@ -15,6 +15,7 @@ const defaultOptions = {
 };
 
 marked.use(gfmHeadingId(false));
+marked.use(markedExtension());
 export default class MarkdownStaticProcessor extends StaticProcessor {
   constructor(options) {
     super();
