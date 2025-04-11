@@ -9,7 +9,7 @@ import nunjucks from 'nunjucks';
  *
  * Upstream issue: https://github.com/mozilla/nunjucks/issues/1483.
  */
-export default function tojson(data) {
+export default function tojsonFilter(data) {
     return new nunjucks.runtime.SafeString(
         JSON.stringify(data).replaceAll('<', '\\u003c').replaceAll('>', '\\u003e').replaceAll('&', '\\u0026').replaceAll("'", '\\u0027'),
     );
