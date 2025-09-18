@@ -24,7 +24,7 @@
     "glob": "8.0.3",
     "marked": "4.0.18",
     "marked-gfm-heading-id": "3.0.8",
-    "moment": "2.29.3",
+    "moment": "2.29.4",
     "nunjucks": "3.2.3"
   },
   "peerDependencies": {
