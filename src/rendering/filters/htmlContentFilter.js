@@ -44,6 +44,13 @@ export default function createHtmlContentFilter(data) {
   });
 
   return function htmlContentFilter(htmlContent) {
-    return htmlFixer(htmlContent);
+    let processedHtml = htmlFixer(htmlContent);
+
+    processedHtml = processedHtml.replace(/<caption class="ons-table__caption ons-u-fs-m ons-u-mb-s ons-u-mt-l">(.*?)<\/caption>/g, (_, text) => {
+      const slug = text.trim().toLowerCase().replace(/\s+/g, "-");
+      return `<caption id="${slug}" class="ons-table__caption ons-u-fs-m u-mb-s ons-u-mt-l">${text}</caption>`;
+    });
+
+    return processedHtml;
   };
 }
