@@ -14,6 +14,6 @@ describe("assertEnvVariables(variableNames)", () => {
   it("does not throw when an environment variable is defined", () => {
     expect(() => {
       assertEnvVariables([ "FAKE_ENV_VAR" ]);
-    }).not.toThrowError();
+    }).not.toThrow();
   });
 });
