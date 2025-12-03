@@ -1,5 +1,8 @@
 name: Run tests
 on: [push]
+permissions:
+    contents: read
+    
 jobs:
   run-tests:
     name: Tests
