@@ -6,6 +6,15 @@ A general purpose website generator which can render pages from static markdown 
 
 > This package treats the [@ons/design-system](https://github.com/ONSdigital/design-system) package as a [peer dependency](https://nodejs.org/en/blog/npm/peer-dependencies/) leaving the website project to include the desired version.
 
+## Running tests
+
+Run all unit tests
+
+    yarn test
+
+Or, pass an argument to e.g. run one test like this:
+
+    yarn test -- src/rendering/createRenderer.spec.js -t "is able to load templates from the design system"
 
 ## Getting started with a new project
 
